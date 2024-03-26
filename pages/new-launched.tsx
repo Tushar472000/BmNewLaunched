@@ -185,8 +185,8 @@ export const getServerSideProps: GetServerSideProps<{
   const getBy: GetTopProductsBy | undefined = 'NewLaunched';
   const searchKeyword = query.search as string | undefined;
   res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=60'
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=60'
   );
   const topProducts = await getTopProducts(getBy, searchKeyword);
   const title = data.site.newLaunched.page
