@@ -1,10 +1,10 @@
 import TopProductItem from '@/containers/home/TopProductItem';
 import data from '@/data';
 import { getTopProducts } from '@/services/spot-prices';
-import { GetTopProductsBy } from '@/interfaces/typeinterfaces';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import type { GetTopProductsBy } from '@/interfaces/typeinterfaces';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next/types/index';
 import Head from 'next/head';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react/index';
 import MiscSkeleton1 from '@/components/Loaders/Misc1/MiscSkeleton1';
 import dynamic from 'next/dynamic';
 const ToggleButton = dynamic(() => import('@/components/new-launched/ToggleButton'));
@@ -19,7 +19,6 @@ export default function NewLaunched({
   useEffect(() => {
     setHydrated(true);
   }, [topProducts]);
-
   const itemListElement = topProducts.homePageProductDetails.map(
     (product: any, index: number) => ({
       '@type': 'ListItem',
@@ -46,21 +45,6 @@ export default function NewLaunched({
         <link
           rel='canonical'
           href={`${process.env.WEBSITE_URL}/new-launched`}
-        />
-        <link
-          rel='preload'
-          as='image'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp'
-        />
-        <link
-          rel='preload'
-          as='image'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp'
-        />
-        <link
-          rel='preload'
-          as='image'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Bullion-Mentor-motive_anp3hj.webp'
         />
         <script
           async
@@ -91,7 +75,7 @@ export default function NewLaunched({
           {/* ******************** PAGE CONTENT ******************** */}
           <div className='flex flex-col gap-2 md:grid md:grid-cols-5'>
             {/* ******************** LEFT ADVERTISEMENT ******************** */}
-            <div className='hidden flex-col gap-4 md:sticky md:top-32 md:block md:h-fit lg:flex '>
+            <div className='hidden flex-col gap-4 md:sticky md:top-32 md:block md:h-fit lg:flex'>
               <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp' />
               <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp' />
             </div>
@@ -134,7 +118,6 @@ export default function NewLaunched({
     </>
   );
 }
-
 export const getServerSideProps: GetServerSideProps<{
   title: any;
   topProducts: Awaited<ReturnType<typeof getTopProducts>>;
