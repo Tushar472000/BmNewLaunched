@@ -1,6 +1,6 @@
 import TopProductItem from '@/containers/home/TopProductItem';
 import data from '@/data';
-import { getTopProducts} from '@/services/spot-prices';
+import { getTopProducts } from '@/services/spot-prices';
 import { GetTopProductsBy } from '@/interfaces/typeinterfaces';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
@@ -11,7 +11,8 @@ import { IoGridSharp } from 'react-icons/io5';
 import Image from 'next/image';
 
 export default function NewLaunched({
-  title , description ,
+  title,
+  description,
   topProducts
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
@@ -20,20 +21,18 @@ export default function NewLaunched({
     setHydrated(true);
   }, [topProducts]);
 
-  const itemListElement = topProducts.homePageProductDetails.map((product: any, index: number) => (
-    {
-      "@type" : "ListItem",
-      "position": index + 1, 
-      "url": "https://www.bullionmentor.com/" + product.shortName
-    }
-  ))
+  const itemListElement = topProducts.homePageProductDetails.map(
+    (product: any, index: number) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: 'https://www.bullionmentor.com/' + product.shortName
+    })
+  );
   const trendingProductsSchema = {
- 
-        "@context" : "https://schema.org",
-        "@type":"ItemList",
-        "itemListElement": itemListElement
-     
-  }
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: itemListElement
+  };
   return (
     <>
       {/* ******************** SEO CONTENT ******************** */}
@@ -64,11 +63,15 @@ export default function NewLaunched({
           as='image'
           href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Bullion-Mentor-motive_anp3hj.webp'
         />
-        <script async
+        <script
+          async
           defer
           type='application/ld+json'
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(trendingProductsSchema) }} 
-                   key='product-jsonld'></script>
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(trendingProductsSchema)
+          }}
+          key='product-jsonld'
+        ></script>
       </Head>
       {/* ******************** GRADIENT ******************** */}
       <div className='bg-gradient-to-b from-secondary via-white to-white text-dark-black'>
@@ -79,7 +82,8 @@ export default function NewLaunched({
           </h1>
           {/* ******************** DESCRIPTION ******************** */}
           <p className='text-sm text-slate-600 md:text-base'>
-          {topProducts.homepagecontent && topProducts.homepagecontent.seoContent}
+            {topProducts.homepagecontent &&
+              topProducts.homepagecontent.seoContent}
           </p>
         </div>
       </div>
@@ -88,62 +92,23 @@ export default function NewLaunched({
           {/* ******************** PAGE CONTENT ******************** */}
           <div className='flex flex-col gap-2 md:grid md:grid-cols-5'>
             {/* ******************** LEFT ADVERTISEMENT ******************** */}
-            <div className='flex-col gap-4 lg:flex md:h-fit md:sticky md:top-32 hidden md:block '>
-              <div className='flex w-full items-center justify-center rounded-md hi '>
-                <Image
-                  src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp'
-                  alt=''
-                  height={500}
-                  width={500}
-                  className='rounded-lg'
-                  loading='lazy'
-                />
-              </div>
-              <div className='flex w-full items-center justify-center rounded-md '>
-                <Image
-                  src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp'
-                  alt=''
-                  height={500}
-                  width={500}
-                  className='rounded-lg pt-4 lg:pt-0'
-                  loading='lazy'
-                />
-              </div>
+            <div className='hidden flex-col gap-4 md:sticky md:top-32 md:block md:h-fit lg:flex '>
+              <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp' />
+              <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp' />
             </div>
             {/* ******************** PRODUCTS ******************** */}
             <div className='col-span-3 mx-0 grow gap-0 lg:mx-4 lg:gap-4'>
               {/* ******************** VIEW TOGGLE BUTTONS ******************** */}
-              <div className='mb-4 hidden justify-end gap-8 md:flex'>
-                {/* ******************** DETAIL VIEW ******************** */}
-                <button
-                  onClick={() => setView('detailed')}
-                  className={`flex items-center gap-2 px-4 py-2 ${view === 'detailed'
-                    ? 'rounded-md bg-primary text-white'
-                    : 'bg-white'
-                    }`}
-                >
-                  <GiHamburgerMenu size={25} />
-                  <span>Detailed View</span>
-                </button>
-                {/* ******************** GRID VIEW ******************** */}
-                <button
-                  onClick={() => setView('grid')}
-                  className={`flex items-center gap-2 px-4 py-2 ${view === 'grid'
-                    ? 'rounded-md bg-primary text-white'
-                    : 'bg-white'
-                    }`}
-                >
-                  <IoGridSharp size={25} />
-                  <span>Grid View</span>
-                </button>
-              </div>
+              <ToggleButton view={view} setView={setView} />
+
               {/* ******************** PRODUCT LIST ******************** */}
               <Suspense>
                 <div
-                  className={` grid gap-4 ${view === 'detailed'
-                    ? 'grid-cols-1 xl:grid-cols-2'
-                    : 'grid-cols-2 xl:grid-cols-3'
-                    }`}
+                  className={` grid gap-4 ${
+                    view === 'detailed'
+                      ? 'grid-cols-1 xl:grid-cols-2'
+                      : 'grid-cols-2 xl:grid-cols-3'
+                  }`}
                 >
                   {topProducts.homePageProductDetails.map((product: any) => (
                     <TopProductItem
@@ -155,42 +120,13 @@ export default function NewLaunched({
                 </div>
               </Suspense>
             </div>
-             {/* ******************** LEFT ADVERTISEMENT ******************** */}
-            <div className='flex-col gap-4 md:h-fit md:sticky md:top-32 md:hidden block'>
-              <div className='flex w-full items-center justify-center rounded-md '>
-                <Image
-                  src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp'
-                  alt=''
-                  height={500}
-                  width={500}
-                  className='rounded-lg'
-                  loading='lazy'
-                />
-              </div>
-              <div className='flex w-full items-center justify-center rounded-md '>
-                <Image
-                  src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp'
-                  alt=''
-                  height={500}
-                  width={500}
-                  className='rounded-lg pt-4 lg:pt-0'
-                  loading='lazy'
-                />
-              </div>
+            {/* ******************** LEFT ADVERTISEMENT ******************** */}
+            <div className='block flex-col gap-4 md:sticky md:top-32 md:hidden md:h-fit'>
+              <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp' />
+              <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp' />
             </div>
             {/* ******************** RIGHT ADVERTISEMENTS ******************** */}
-            <div className='flex-col gap-4 md:flex pt-6 lg:pt-0  md:h-fit md:sticky md:top-32'>
-              <div className='flex  w-full items-center justify-center rounded-md'>
-                <Image
-                  src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Bullion-Mentor-motive_anp3hj.webp'
-                  alt=''
-                  height={500}
-                  width={500}
-                  className='rounded-lg'
-                  loading='lazy'
-                />
-              </div>
-            </div>
+            <RightAdvertisements />
           </div>
         </div>
       ) : (
@@ -212,12 +148,80 @@ export const getServerSideProps: GetServerSideProps<{
     'public, s-maxage=10, stale-while-revalidate=60'
   );
   const topProducts = await getTopProducts(getBy, searchKeyword);
-  const title = data.site.newLaunched.page
-  const description = data.site.newLaunched.description
+  const title = data.site.newLaunched.page;
+  const description = data.site.newLaunched.description;
   return {
     props: {
-      title , description ,
+      title,
+      description,
       topProducts
     }
   };
+};
+
+const ToggleButton = ({ view, setView }: any) => {
+  return (
+    <div>
+      <div className='mb-4 hidden justify-end gap-8 md:flex'>
+        {/* ******************** DETAIL VIEW ******************** */}
+        <button
+          onClick={() => setView('detailed')}
+          className={`flex items-center gap-2 px-4 py-2 ${
+            view === 'detailed'
+              ? 'rounded-md bg-primary text-white'
+              : 'bg-white'
+          }`}
+        >
+          <GiHamburgerMenu size={25} />
+          <span>Detailed View</span>
+        </button>
+        {/* ******************** GRID VIEW ******************** */}
+        <button
+          onClick={() => setView('grid')}
+          className={`flex items-center gap-2 px-4 py-2 ${
+            view === 'grid' ? 'rounded-md bg-primary text-white' : 'bg-white'
+          }`}
+        >
+          <IoGridSharp size={25} />
+          <span>Grid View</span>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const RightAdvertisements = () => {
+  return (
+    <>
+      <div className='flex-col gap-4 pt-6 md:sticky md:top-32  md:flex md:h-fit lg:pt-0'>
+        <div className='flex  w-full items-center justify-center rounded-md'>
+          <Image
+            src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Bullion-Mentor-motive_anp3hj.webp'
+            alt=''
+            height={500}
+            width={500}
+            className='rounded-lg'
+            loading='lazy'
+          />
+        </div>
+      </div>
+    </>
+  );
+};
+
+const LeftAdvertisements = ({ src }: any) => {
+  return (
+    <>
+      <div className='flex w-full items-center justify-center rounded-md '>
+        <Image
+          src={src}
+          alt=''
+          height={500}
+          width={500}
+          className='rounded-lg pt-4 lg:pt-0'
+          loading='lazy'
+        />
+      </div>
+    </>
+  );
 };
