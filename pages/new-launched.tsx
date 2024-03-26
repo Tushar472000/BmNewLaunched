@@ -7,20 +7,19 @@ import Head from 'next/head';
 import { Suspense, useEffect, useState } from 'react';
 import MiscSkeleton1 from '@/components/Loaders/Misc1/MiscSkeleton1';
 import dynamic from 'next/dynamic';
-const ToggleButton = dynamic(
-  () => import('@/components/new-launched/ToggleButton')
-);
-const LeftAdvertisements = dynamic(
-  () => import('@/components/new-launched/LeftAdvertisements')
-);
-const RightAdvertisements = dynamic(
-  () => import('@/components/new-launched/RightAdvertisements')
-);
+const ToggleButton = dynamic(() => import('@/components/new-launched/ToggleButton'));
+const LeftAdvertisements = dynamic(() => import('@/components/new-launched/LeftAdvertisements'));
+const RightAdvertisements = dynamic(() => import('@/components/new-launched/RightAdvertisements'));
 export default function NewLaunched({
   title,
   topProducts
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, [topProducts]);
+
   const itemListElement = topProducts.homePageProductDetails.map(
     (product: any, index: number) => ({
       '@type': 'ListItem',
@@ -87,7 +86,7 @@ export default function NewLaunched({
           </p>
         </div>
       </div>
-      <Suspense fallback={<MiscSkeleton1 />}>
+      {hydrated === true ? (
         <div className='container mx-auto text-dark-black'>
           {/* ******************** PAGE CONTENT ******************** */}
           <div className='flex flex-col gap-2 md:grid md:grid-cols-5'>
@@ -129,7 +128,9 @@ export default function NewLaunched({
             <RightAdvertisements />
           </div>
         </div>
-      </Suspense>
+      ) : (
+        <MiscSkeleton1 />
+      )}
     </>
   );
 }
