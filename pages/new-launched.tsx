@@ -88,8 +88,8 @@ export default function NewLaunched({
           {/* ******************** PAGE CONTENT ******************** */}
           <div className='flex flex-col gap-2 md:grid md:grid-cols-5'>
             {/* ******************** LEFT ADVERTISEMENT ******************** */}
-            <div className='flex-col gap-4 lg:flex md:h-fit md:sticky md:top-32'>
-              <div className='flex w-full items-center justify-center rounded-md '>
+            <div className='flex-col gap-4 lg:flex md:h-fit md:sticky md:top-32 hidden md:block '>
+              <div className='flex w-full items-center justify-center rounded-md hi '>
                 <Image
                   src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp'
                   alt=''
@@ -154,6 +154,29 @@ export default function NewLaunched({
                   ))}
                 </div>
               </Suspense>
+            </div>
+             {/* ******************** LEFT ADVERTISEMENT ******************** */}
+            <div className='flex-col gap-4 md:h-fit md:sticky md:top-32 md:hidden block'>
+              <div className='flex w-full items-center justify-center rounded-md '>
+                <Image
+                  src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp'
+                  alt=''
+                  height={500}
+                  width={500}
+                  className='rounded-lg'
+                  loading='lazy'
+                />
+              </div>
+              <div className='flex w-full items-center justify-center rounded-md '>
+                <Image
+                  src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp'
+                  alt=''
+                  height={500}
+                  width={500}
+                  className='rounded-lg pt-4 lg:pt-0'
+                  loading='lazy'
+                />
+              </div>
             </div>
             {/* ******************** RIGHT ADVERTISEMENTS ******************** */}
             <div className='flex-col gap-4 md:flex pt-6 lg:pt-0  md:h-fit md:sticky md:top-32'>
