@@ -6,13 +6,12 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Head from 'next/head';
 import { Suspense, useEffect, useState } from 'react';
 import MiscSkeleton1 from '@/components/Loaders/Misc1/MiscSkeleton1';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { IoGridSharp } from 'react-icons/io5';
-import Image from 'next/image';
-
+import dynamic from 'next/dynamic';
+const ToggleButton = dynamic(() => import('@/components/new-launched/ToggleButton'));
+const LeftAdvertisements = dynamic(() => import('@/components/new-launched/LeftAdvertisements'));
+const RightAdvertisements = dynamic(() => import('@/components/new-launched/RightAdvertisements'));
 export default function NewLaunched({
   title,
-  description,
   topProducts
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
@@ -138,7 +137,6 @@ export default function NewLaunched({
 
 export const getServerSideProps: GetServerSideProps<{
   title: any;
-  description: any;
   topProducts: Awaited<ReturnType<typeof getTopProducts>>;
 }> = async ({ query, res }) => {
   const getBy: GetTopProductsBy | undefined = 'NewLaunched';
@@ -149,79 +147,10 @@ export const getServerSideProps: GetServerSideProps<{
   );
   const topProducts = await getTopProducts(getBy, searchKeyword);
   const title = data.site.newLaunched.page;
-  const description = data.site.newLaunched.description;
   return {
     props: {
       title,
-      description,
       topProducts
     }
   };
-};
-
-const ToggleButton = ({ view, setView }: any) => {
-  return (
-    <div>
-      <div className='mb-4 hidden justify-end gap-8 md:flex'>
-        {/* ******************** DETAIL VIEW ******************** */}
-        <button
-          onClick={() => setView('detailed')}
-          className={`flex items-center gap-2 px-4 py-2 ${
-            view === 'detailed'
-              ? 'rounded-md bg-primary text-white'
-              : 'bg-white'
-          }`}
-        >
-          <GiHamburgerMenu size={25} />
-          <span>Detailed View</span>
-        </button>
-        {/* ******************** GRID VIEW ******************** */}
-        <button
-          onClick={() => setView('grid')}
-          className={`flex items-center gap-2 px-4 py-2 ${
-            view === 'grid' ? 'rounded-md bg-primary text-white' : 'bg-white'
-          }`}
-        >
-          <IoGridSharp size={25} />
-          <span>Grid View</span>
-        </button>
-      </div>
-    </div>
-  );
-};
-
-const RightAdvertisements = () => {
-  return (
-    <>
-      <div className='flex-col gap-4 pt-6 md:sticky md:top-32  md:flex md:h-fit lg:pt-0'>
-        <div className='flex  w-full items-center justify-center rounded-md'>
-          <Image
-            src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Bullion-Mentor-motive_anp3hj.webp'
-            alt=''
-            height={500}
-            width={500}
-            className='rounded-lg'
-            loading='lazy'
-          />
-        </div>
-      </div>
-    </>
-  );
-};
-
-const LeftAdvertisements = ({ src }: any) => {
-  return (
-    <>
-      <div className='flex w-full items-center justify-center rounded-md '>
-        <Image
-          src={src}
-          alt=''
-          height={500}
-          width={500}
-          className='rounded-lg pt-4 lg:pt-0'
-          loading='lazy'
-        />
-      </div>
-    </>
-  );
 };
