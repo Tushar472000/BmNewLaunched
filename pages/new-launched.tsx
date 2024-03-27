@@ -176,7 +176,7 @@ export const getServerSideProps: GetServerSideProps<{
   const searchKeyword = query.search as string | undefined;
   const userAgent = req.headers['user-agent'] ?? ''; 
   const isMobile = /Mobile|Android/i.test(userAgent); 
-  const size = isMobile ? 4 : 1; 
+  const size = isMobile ? 4 : 12; 
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=60'
