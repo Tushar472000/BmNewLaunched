@@ -64,10 +64,10 @@ export default function NewLaunched({
             Explore the best prices of bullion with Bullion Mentor
           </h1>
           {/* ******************** DESCRIPTION ******************** */}
-          <p className='text-sm text-slate-600 md:text-base'>
+          {/* <p className='text-sm text-slate-600 md:text-base'>
             {topProducts.homepagecontent &&
               topProducts.homepagecontent.seoContent}
-          </p>
+          </p> */}
         </div>
       </div>
       {hydrated === true ? (
