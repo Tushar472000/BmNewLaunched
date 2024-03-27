@@ -80,11 +80,11 @@ export default function NewLaunched({
         <div className='container mx-auto mt-3 text-dark-black'>
           <div className='sm:flex sm:flex-row'>
             {/* ******************** LEFT ADVERTISEMENT ******************** */}
-            <div className='hidden sm:sticky sm:top-32 sm:block sm:w-[32%] md:h-fit'>
+            <div className='hidden sm:sticky sm:top-32 sm:block sm:w-[32%] md:h-fit lg:w-[200px] xl:w-[300px]'>
               <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp' />
               <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp' />
             </div>
-            <div>
+            <div className='md:ml-8'>
               {/* ******************** PRODUCTS ******************** */}
 
               {/* ******************** VIEW TOGGLE BUTTONS ******************** */}
@@ -116,15 +116,13 @@ export default function NewLaunched({
               </div>
               {/* ******************** SEO CONTENT Bottom ******************** */}
               <div
-                className={`text-justify' mx-2 text-sm text-slate-600 sm:container sm:mx-auto sm:mt-10 md:relative md:col-span-4 md:mt-5  md:text-base`}
+                className={`text-justify' mx-2 text-sm sm:container sm:mx-auto sm:mt-10 md:relative md:col-span-4 md:mt-5  md:text-base`}
               >
-                <div className='text-dark-black  lg:hidden'>
-                  <div className=' md:mt-2 lg:mt-1'>
-                    <p>
-                      {topProducts.homepagecontent &&
-                        topProducts.homepagecontent.seoContent}
-                    </p>
-                  </div>
+                <div className=' md:mt-2 lg:mt-1 lg:hidden'>
+                  <p>
+                    {topProducts.homepagecontent &&
+                      topProducts.homepagecontent.seoContent}
+                  </p>
                 </div>
               </div>
             </div>
