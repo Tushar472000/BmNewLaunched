@@ -106,7 +106,8 @@ export default function NewLaunched({
               <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp' />
               <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp' />
             </div>
-            <div className='md:ml-8'>
+            <div className='md:flex-2 sm:w-[68%] lg:w-[60%]'>
+            <div className='flex flex-col gap-2'>
               {/* ******************** PRODUCTS ******************** */}
 
               {/* ******************** VIEW TOGGLE BUTTONS ******************** */}
@@ -153,6 +154,7 @@ export default function NewLaunched({
                       topProducts.homepagecontent.seoContent}
                   </p>
                 </div>
+              </div>
               </div>
             </div>
 
