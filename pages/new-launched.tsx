@@ -171,14 +171,17 @@ export default function NewLaunched({
 export const getServerSideProps: GetServerSideProps<{
   title: any;
   topProducts: Awaited<ReturnType<typeof getTopProducts>>;
-}> = async ({ query, res }) => {
+}> = async ({ query, res,req }) => {
   const getBy: GetTopProductsBy | undefined = 'NewLaunched';
   const searchKeyword = query.search as string | undefined;
+  const userAgent = req.headers['user-agent'] ?? ''; 
+  const isMobile = /Mobile|Android/i.test(userAgent); 
+  const size = isMobile ? 4 : 1; 
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=60'
   );
-  const topProducts = await getTopProducts(getBy, searchKeyword,'','4','1');
+  const topProducts = await getTopProducts(getBy, searchKeyword,'',size.toString(),'1');
   const title = data.site.newLaunched.page;
 
   return {
