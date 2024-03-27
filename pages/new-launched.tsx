@@ -7,9 +7,15 @@ import Head from 'next/head';
 import { Suspense, useEffect, useState } from 'react';
 import MiscSkeleton1 from '@/components/Loaders/Misc1/MiscSkeleton1';
 import dynamic from 'next/dynamic';
-const ToggleButton = dynamic(() => import('@/components/new-launched/ToggleButton'));
-const LeftAdvertisements = dynamic(() => import('@/components/new-launched/LeftAdvertisements'));
-const RightAdvertisements = dynamic(() => import('@/components/new-launched/RightAdvertisements'));
+const ToggleButton = dynamic(
+  () => import('@/components/new-launched/ToggleButton')
+);
+const LeftAdvertisements = dynamic(
+  () => import('@/components/new-launched/LeftAdvertisements')
+);
+const RightAdvertisements = dynamic(
+  () => import('@/components/new-launched/RightAdvertisements')
+);
 export default function NewLaunched({
   title,
   topProducts
@@ -59,28 +65,28 @@ export default function NewLaunched({
       {/* ******************** GRADIENT ******************** */}
       <div className='bg-gradient-to-b from-secondary via-white to-white text-dark-black'>
         {/* ******************** HEADING ******************** */}
-        <div className='container mx-auto py-8 md:mt-2  lg:mt-1'>
-          <h1 className='mb-2 mt-3 text-lg font-bold md:text-xl lg:mt-0'>
+        <div className='container mx-auto pt-8 md:mt-2 lg:mt-1'>
+          <h1 className='mt-4 text-lg font-bold md:text-xl lg:mt-0'>
             Explore the best prices of bullion with Bullion Mentor
           </h1>
-          {/* ******************** DESCRIPTION ******************** */}
-          {/* <p className='text-sm text-slate-600 md:text-base'>
+          {/* ******************** SEO CONTENT TOP ******************** */}
+          <p className='hidden text-sm md:text-base lg:block'>
             {topProducts.homepagecontent &&
               topProducts.homepagecontent.seoContent}
-          </p> */}
+          </p>
         </div>
       </div>
       {hydrated === true ? (
-        <div className='container mx-auto text-dark-black'>
-          {/* ******************** PAGE CONTENT ******************** */}
-          <div className='flex flex-col gap-2 md:grid md:grid-cols-5'>
+        <div className='container mx-auto mt-3 text-dark-black'>
+          <div className='sm:flex sm:flex-row'>
             {/* ******************** LEFT ADVERTISEMENT ******************** */}
-            <div className='hidden flex-col gap-4 md:sticky md:top-32 md:block md:h-fit lg:flex'>
+            <div className='hidden sm:sticky sm:top-32 sm:block sm:w-[32%] md:h-fit'>
               <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp' />
               <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp' />
             </div>
-            {/* ******************** PRODUCTS ******************** */}
-            <div className='col-span-3 mx-0 grow gap-0 lg:mx-4 lg:gap-4'>
+            <div>
+              {/* ******************** PRODUCTS ******************** */}
+
               {/* ******************** VIEW TOGGLE BUTTONS ******************** */}
               <ToggleButton view={view} setView={setView} />
 
@@ -102,12 +108,27 @@ export default function NewLaunched({
                   ))}
                 </div>
               </Suspense>
+
+              {/* ******************** LEFT ADVERTISEMENT ******************** */}
+              <div className='mx-2 flex-col gap-4 sm:hidden md:static md:top-[32px] md:h-fit'>
+                <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp' />
+                <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp' />
+              </div>
+              {/* ******************** SEO CONTENT Bottom ******************** */}
+              <div
+                className={`text-justify' mx-2 text-sm text-slate-600 sm:container sm:mx-auto sm:mt-10 md:relative md:col-span-4 md:mt-5  md:text-base`}
+              >
+                <div className='text-dark-black  lg:hidden'>
+                  <div className=' md:mt-2 lg:mt-1'>
+                    <p>
+                      {topProducts.homepagecontent &&
+                        topProducts.homepagecontent.seoContent}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            {/* ******************** LEFT ADVERTISEMENT ******************** */}
-            <div className='block flex-col gap-4 md:sticky md:top-32 md:hidden md:h-fit'>
-              <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp' />
-              <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/v1689165092/Banners/Canadian-Maple-Leaf_c1juxl.webp' />
-            </div>
+
             {/* ******************** RIGHT ADVERTISEMENTS ******************** */}
             <RightAdvertisements />
           </div>
