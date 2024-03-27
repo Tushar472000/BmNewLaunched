@@ -54,7 +54,7 @@ export const getTopProducts = async (
     return searchProducts(searchKeyword);
   }
   const url = new URL(
-    `${process.env.BASE_URL}/api/BestBullionDeals/GetHomePageProductsByLocation`
+    `${process.env.BASE_URL}/api/BestBullionDeals/GetHomePageProductsByLocation_Temp?`
   );
   url.searchParams.set('GetBy', getBy ?? 'Trending');
 
@@ -67,9 +67,16 @@ export const getTopProducts = async (
       url.searchParams.set('Pagenumber', PageNumber.toString());
     }
   }
+  
+  if (size) {
+    url.searchParams.set('size', size.toString()); 
+  }
+  if (PageNumber) {
+    url.searchParams.set('Pagenumber', PageNumber.toString());
+  }
 
 
-
+  
   const res = await fetcher.get<ApiResponse<Product[]>>(url.toString());
   return res.data.data;
 };

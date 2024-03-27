@@ -301,7 +301,7 @@ export const getServerSideProps: GetServerSideProps<{
     'public, s-maxage=10, stale-while-revalidate=60'
   );
   let topProducts;
-  topProducts = await getTopProducts(getBy, searchKeyword);
+  topProducts = await getTopProducts(getBy, searchKeyword,'','16','1');
   const title = data.site.home.page;
   const description = data.site.home.description;
   return {

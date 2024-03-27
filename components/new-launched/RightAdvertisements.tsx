@@ -2,7 +2,7 @@ import Image from 'next/image';
 const RightAdvertisements = () => {
   return (
     <>
-      <div className='hidden md:ml-4 lg:flex lg:w-[25%] xl:w-[30%]'>
+      <div className='hidden md:ml-4 lg:flex lg:w-[25%] xl:w-[20%]'>
         <div className='sm:sticky sm:top-32 sm:h-fit ml-8'>
           <Image
             src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Bullion-Mentor-motive_anp3hj.webp'

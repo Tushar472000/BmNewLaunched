@@ -1,4 +1,6 @@
 import TopProductItem from '@/containers/home/TopProductItem';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import SearchSpinner from '@/components/Loaders/SearchSpinner';
 import data from '@/data';
 import { getTopProducts } from '@/services/spot-prices';
 import type { GetTopProductsBy } from '@/interfaces/typeinterfaces';
@@ -22,9 +24,29 @@ export default function NewLaunched({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
   const [hydrated, setHydrated] = useState(false);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [products, setProducts] = useState<any[]>(topProducts.homePageProductDetails);
+
+    const loadMoreProducts = async () => {
+      console.log('called');
+      const getBy: GetTopProductsBy | undefined = 'NewLaunched';
+      const searchKeyword =  undefined;
+      const nextPage = page + 1;
+      let pageSize = '4';
+      const newProducts = await getTopProducts(getBy, searchKeyword,'',pageSize,  nextPage.toString());
+      console.log(newProducts.homePageProductDetails)
+      if (newProducts.homePageProductDetails.length === 0) {
+        setHasMore(false);
+      } else {
+        setProducts((prevProducts: any) => [...prevProducts, ...newProducts.homePageProductDetails]);
+        setPage(nextPage);
+      }
+    };
   useEffect(() => {
     setHydrated(true);
   }, [topProducts]);
+  
   const itemListElement = topProducts.homePageProductDetails.map(
     (product: any, index: number) => ({
       '@type': 'ListItem',
@@ -92,14 +114,21 @@ export default function NewLaunched({
 
               {/* ******************** PRODUCT LIST ******************** */}
               <Suspense>
+              <InfiniteScroll
+              dataLength={products.length}
+              next={loadMoreProducts}
+              hasMore={hasMore}
+              loader={<SearchSpinner />}
+              scrollThreshold={0.3}
+              >
                 <div
-                  className={` grid gap-4 ${
+                  className={`mx-1  mb-5 grid gap-4 ${
                     view === 'detailed'
                       ? 'grid-cols-1 xl:grid-cols-2'
                       : 'grid-cols-2 xl:grid-cols-3'
                   }`}
                 >
-                  {topProducts.homePageProductDetails.map((product: any) => (
+                  {products.map((product: any) => (
                     <TopProductItem
                       view={view}
                       key={product.productId}
@@ -107,8 +136,8 @@ export default function NewLaunched({
                     />
                   ))}
                 </div>
+              </InfiniteScroll>
               </Suspense>
-
               {/* ******************** LEFT ADVERTISEMENT ******************** */}
               <div className='mx-2 flex-col gap-4 sm:hidden md:static md:top-[32px] md:h-fit'>
                 <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Royal-Canadian-Mint_xqgsz4.webp' />
@@ -147,8 +176,9 @@ export const getServerSideProps: GetServerSideProps<{
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=60'
   );
-  const topProducts = await getTopProducts(getBy, searchKeyword);
+  const topProducts = await getTopProducts(getBy, searchKeyword,'','4','1');
   const title = data.site.newLaunched.page;
+
   return {
     props: {
       title,
