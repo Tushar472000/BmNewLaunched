@@ -110,7 +110,7 @@ export const getServerSideProps: GetServerSideProps<{
     EDate: dayjs().format('YYYY-MM-DD')
   });
   const priceHistory = await getPriceHistory(query);
-  const topProducts = await getTopProducts();
+  const topProducts = await getTopProducts(undefined,undefined,'','16','1');
   return {
     props: {
       priceHistory: priceHistory,
