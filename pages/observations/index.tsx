@@ -165,7 +165,8 @@ export const getServerSideProps: GetServerSideProps<{
   const getBy = query.getBy as GetTopProductsBy | undefined;
   const searchKeyword = query.search as string | undefined;
 
-  const topProducts = await getTopProducts(getBy, searchKeyword);
+  const topProducts = await getTopProducts(getBy, searchKeyword,'','16','1');
+  // console.log('---------->',topProducts);
   const title = data.site.observation.page;
   const description = data.site.observation.description;
   return {
