@@ -29,19 +29,22 @@ export default function NewLaunched({
     const [products, setProducts] = useState<any[]>(topProducts.homePageProductDetails);
 
     const loadMoreProducts = async () => {
-      console.log('called');
+     if(products.length!=12){
       const getBy: GetTopProductsBy | undefined = 'NewLaunched';
       const searchKeyword =  undefined;
       const nextPage = page + 1;
       let pageSize = '4';
       const newProducts = await getTopProducts(getBy, searchKeyword,'',pageSize,  nextPage.toString());
-      console.log(newProducts.homePageProductDetails)
       if (newProducts.homePageProductDetails.length === 0) {
         setHasMore(false);
       } else {
         setProducts((prevProducts: any) => [...prevProducts, ...newProducts.homePageProductDetails]);
         setPage(nextPage);
       }
+    }
+    else{
+      setHasMore(false)
+    }
     };
   useEffect(() => {
     setHydrated(true);
