@@ -5,9 +5,7 @@ import { NextRequest } from 'next/server';
 import dynamic from 'next/dynamic';
 // -------------------------- Dynamic import -------------------//
 const Footer = dynamic(() => import('./Footer'));
-
 export default function Layout({ children }: LayoutProps, req: NextRequest) {
-
   const addProductJsonLd = () => {
     if (window.matchMedia('(min-width: 768px)').matches) {
     return {
