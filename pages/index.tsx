@@ -55,10 +55,10 @@ export default function Home({
     topProducts.homePageProductDetails
   );
   useEffect(() => {
-    const check = async () => {
-      await getMaintainance();
-    };
-    check();
+    // const check = async () => {
+    //   await getMaintainance();
+    // };
+    // check();
     const dashboardImages = DashboardImages();
     setDynamicImages(
       dashboardImages.filter((image) => image.isStatic === false)
