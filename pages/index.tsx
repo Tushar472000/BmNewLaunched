@@ -308,7 +308,7 @@ export const getServerSideProps: GetServerSideProps<{
   };
   const userAgent = req.headers['user-agent'] ?? ''; 
   const isMobile = /Mobile|Android/i.test(userAgent); 
-  const size = isMobile ? 2 : 16; 
+  const size = isMobile ? 4 : 16; 
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=60'
