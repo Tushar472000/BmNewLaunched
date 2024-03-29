@@ -258,7 +258,7 @@ export default function Home({
                       next={loadMoreProducts}
                       hasMore={hasMore}
                       loader={<SearchSpinner />}
-                      scrollThreshold={0.3}
+                      scrollThreshold={0.2}
                     >
                       <div
                         className={`grid gap-x-2 gap-y-4 md:gap-y-4 ${
