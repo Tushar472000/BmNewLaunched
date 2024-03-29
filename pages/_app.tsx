@@ -49,14 +49,14 @@ export default function App({
               ></script>
 
               {/*------------ Google analytics start ---------------- */}
-              <Script async defer id='google-analytics'>
+              <script async defer id='google-analytics'>
                 {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-H1CHYCNFQV');
               `}
-              </Script>
+              </script>
               <Component {...pageProps} />
             </Layout>
           </SessionProvider>
