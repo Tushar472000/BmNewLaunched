@@ -82,7 +82,7 @@ export default function Home({
       const getBy: GetTopProductsBy | undefined = 'NewLaunched';
       const searchKeyword = undefined;
       const nextPage = page + 1;
-      let pageSize = '4';
+      let pageSize = '2';
       const newProducts = await getTopProducts(
         getBy,
         searchKeyword,
