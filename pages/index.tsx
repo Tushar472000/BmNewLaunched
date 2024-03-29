@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/inline-script-id */
 /* eslint-disable @next/next/no-script-in-head */
-import Image from 'next/image';
-import Link from 'next/link';
+
+
 import Head from 'next/head';
 import { Suspense, useEffect, useState } from 'react';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -22,6 +22,7 @@ import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
 import Search from '@/components/Search';
+import GoogleAdsCode from '@/components/GoogleAdsCode';
 // -------------------------- Dynamic import -------------------//
 const RequestProductModal = dynamic(
   () => import('@/components/ModalForm/RequestProduct/RequestProductModal')
@@ -32,6 +33,8 @@ const SubscribeModal = dynamic(
 const DescText = dynamic(
   () => import('@/components/HomePageComponents/DescText')
 );
+const LeftAdvertisements = dynamic(() => import('@/components/LeftAdvertisements'));
+ const StaticHeroImages = dynamic(() => import('@/components/StaticHeroImages'));
 // const Search = dynamic(() => import('@/components/Search'));
 export default function Home({
   title,
@@ -103,7 +106,6 @@ export default function Home({
           }
         />
         {/*----------- Thumbnail code modified end */}
-
         <meta property='og:type' content={data.OGTags.home.type} />
         <meta property='og:url' content={`${process.env.WEBSITE_URL}`} />
         <meta
@@ -163,26 +165,7 @@ export default function Home({
                   <DashboardCarousel images={dynamicImages} />
                 </div>
                 {/******************* STATIC HERO IMAGES *******************/}
-                <div className='relative hidden h-32 w-fit md:mt-2 md:block md:h-40 md:w-auto lg:h-60 xl:h-80'>
-                  {staticImage?.imagePath && (
-                    <Link
-                      target='_blank'
-                      href={staticImage.eventRedirectiveUrl}
-                      passHref
-                      prefetch={false}
-                    >
-                      <Image
-                        fill
-                        aria-label={staticImage.imageName}
-                        className='rounded-lg object-contain  md:object-fill'
-                        src={staticImage?.imagePath}
-                        alt={staticImage?.imageName}
-                        priority={false}
-                        loading='lazy'
-                      />
-                    </Link>
-                  )}
-                </div>
+                <StaticHeroImages staticImage={staticImage}/>
               </section>
             </section>
             {/******************* PAGE HEADING *******************/}
@@ -196,21 +179,7 @@ export default function Home({
                   <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Majestic-Gilded-Kookaburra_cswfqg.webp' />
 
                   {/****************** GOOGLE ADS CODE GOES HERE ******************/}
-
-                  <div className='flex flex-col items-center'>
-                    <h2 className='pt-4 text-2xl font-semibold'>Sponsored</h2>
-                    <hr className='my-2 w-full' />
-                    <Image
-                      className='item-centerh-[300px] w-[445px] cursor-pointer md:h-[250px] lg:w-[500px] xl:h-[300px] '
-                      onClick={toggleRequestModal}
-                      src='https://res.cloudinary.com/bullionmentor/image/upload/Images/ads-looking_fnfe0i.webp'
-                      height={500}
-                      width={500}
-                      alt='ads'
-                      priority={false}
-                      loading='lazy'
-                    />
-                  </div>
+                  <GoogleAdsCode toggleRequestModal={toggleRequestModal}/>
                 </div>
 
                 {/******************* PRODUCT LISTING *******************/}
@@ -312,22 +281,3 @@ export const getServerSideProps: GetServerSideProps<{
     }
   };
 };
-function LeftAdvertisements({ src }: any) {
-  return (
-    <>
-      <div className='mt-4 md:mt-2'>
-        <div className='flex  w-full items-center  justify-center rounded  text-2xl md:mt-0 lg:mt-0'>
-          <Image
-            src={src}
-            height={500}
-            width={500}
-            priority={false}
-            loading='lazy'
-            alt='ads'
-            className='h-[300px] w-[445px] justify-center rounded-lg md:h-[250px] lg:w-[500px] xl:h-[300px] 2xl:h-[360px]'
-          />
-        </div>
-      </div>
-    </>
-  );
-}
