@@ -82,7 +82,7 @@ export default function Home({
       const getBy: GetTopProductsBy | undefined = 'NewLaunched';
       const searchKeyword = undefined;
       const nextPage = page + 1;
-      let pageSize = '2';
+      let pageSize = '4';
       const newProducts = await getTopProducts(
         getBy,
         searchKeyword,
@@ -258,7 +258,7 @@ export default function Home({
                       next={loadMoreProducts}
                       hasMore={hasMore}
                       loader={<SearchSpinner />}
-                      scrollThreshold={0.2}
+                      scrollThreshold={0.3}
                     >
                       <div
                         className={`grid gap-x-2 gap-y-4 md:gap-y-4 ${
