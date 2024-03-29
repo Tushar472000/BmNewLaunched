@@ -78,7 +78,7 @@ export default function Home({
     }
   }, []);
   const loadMoreProducts = async () => {
-    if (products.length != 12) {
+    if (products.length != 16) {
       const getBy: GetTopProductsBy | undefined = 'NewLaunched';
       const searchKeyword = undefined;
       const nextPage = page + 1;
@@ -307,7 +307,7 @@ export const getServerSideProps: GetServerSideProps<{
   };
   const userAgent = req.headers['user-agent'] ?? ''; 
   const isMobile = /Mobile|Android/i.test(userAgent); 
-  const size = isMobile ? 2 : 12; 
+  const size = isMobile ? 2 : 16; 
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=60'
