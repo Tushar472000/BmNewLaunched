@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/inline-script-id */
 /* eslint-disable @next/next/no-script-in-head */
-
-
 import Head from 'next/head';
 import { Suspense, useEffect, useState } from 'react';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -23,6 +21,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
 import Search from '@/components/Search';
 import GoogleAdsCode from '@/components/GoogleAdsCode';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import SearchSpinner from '@/components/Loaders/SearchSpinner';
 // -------------------------- Dynamic import -------------------//
 const RequestProductModal = dynamic(
   () => import('@/components/ModalForm/RequestProduct/RequestProductModal')
@@ -33,8 +33,10 @@ const SubscribeModal = dynamic(
 const DescText = dynamic(
   () => import('@/components/HomePageComponents/DescText')
 );
-const LeftAdvertisements = dynamic(() => import('@/components/LeftAdvertisements'));
- const StaticHeroImages = dynamic(() => import('@/components/StaticHeroImages'));
+const LeftAdvertisements = dynamic(
+  () => import('@/components/LeftAdvertisements')
+);
+const StaticHeroImages = dynamic(() => import('@/components/StaticHeroImages'));
 // const Search = dynamic(() => import('@/components/Search'));
 export default function Home({
   title,
@@ -47,6 +49,11 @@ export default function Home({
   const [hydrated, setHydrated] = useState(false);
   const [dynamicImages, setDynamicImages] = useState<any>();
   const [staticImage, setStaticImage] = useState<any>();
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [products, setProducts] = useState<any[]>(
+    topProducts.homePageProductDetails
+  );
   useEffect(() => {
     const check = async () => {
       await getMaintainance();
@@ -70,7 +77,32 @@ export default function Home({
       }, 6000);
     }
   }, []);
-
+  const loadMoreProducts = async () => {
+    if (products.length != 12) {
+      const getBy: GetTopProductsBy | undefined = 'NewLaunched';
+      const searchKeyword = undefined;
+      const nextPage = page + 1;
+      let pageSize = '4';
+      const newProducts = await getTopProducts(
+        getBy,
+        searchKeyword,
+        '',
+        pageSize,
+        nextPage.toString()
+      );
+      if (newProducts.homePageProductDetails.length === 0) {
+        setHasMore(false);
+      } else {
+        setProducts((prevProducts: any) => [
+          ...prevProducts,
+          ...newProducts.homePageProductDetails
+        ]);
+        setPage(nextPage);
+      }
+    } else {
+      setHasMore(false);
+    }
+  };
   const homePageSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -165,7 +197,7 @@ export default function Home({
                   <DashboardCarousel images={dynamicImages} />
                 </div>
                 {/******************* STATIC HERO IMAGES *******************/}
-                <StaticHeroImages staticImage={staticImage}/>
+                <StaticHeroImages staticImage={staticImage} />
               </section>
             </section>
             {/******************* PAGE HEADING *******************/}
@@ -179,7 +211,7 @@ export default function Home({
                   <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Majestic-Gilded-Kookaburra_cswfqg.webp' />
 
                   {/****************** GOOGLE ADS CODE GOES HERE ******************/}
-                  <GoogleAdsCode toggleRequestModal={toggleRequestModal}/>
+                  <GoogleAdsCode toggleRequestModal={toggleRequestModal} />
                 </div>
 
                 {/******************* PRODUCT LISTING *******************/}
@@ -220,23 +252,31 @@ export default function Home({
                   </div>
                   {/******************* PRODUCTS ARRAY *******************/}
                   <Suspense fallback={<GridViewSkeleton />}>
-                    <div
-                      className={`grid gap-x-2 gap-y-4 md:gap-y-4 ${
-                        view === 'grid'
-                          ? 'grid-cols-2 xl:grid-cols-4 '
-                          : 'grid-cols-1 lg:grid-cols-2'
-                      }`}
+                    <InfiniteScroll
+                      dataLength={products.length}
+                      next={loadMoreProducts}
+                      hasMore={hasMore}
+                      loader={<SearchSpinner />}
+                      scrollThreshold={0.3}
                     >
-                      {topProducts.homePageProductDetails.map(
-                        (product: any) => (
-                          <TopProductItem
-                            view={view}
-                            key={product.productId}
-                            {...product}
-                          />
-                        )
-                      )}
-                    </div>
+                      <div
+                        className={`grid gap-x-2 gap-y-4 md:gap-y-4 ${
+                          view === 'grid'
+                            ? 'grid-cols-2 xl:grid-cols-4 '
+                            : 'grid-cols-1 lg:grid-cols-2'
+                        }`}
+                      >
+                        {topProducts.homePageProductDetails.map(
+                          (product: any) => (
+                            <TopProductItem
+                              view={view}
+                              key={product.productId}
+                              {...product}
+                            />
+                          )
+                        )}
+                      </div>
+                    </InfiniteScroll>
                   </Suspense>
                 </div>
               </div>
@@ -260,17 +300,20 @@ export const getServerSideProps: GetServerSideProps<{
   title: any;
   description: any;
   topProducts?: Awaited<ReturnType<typeof getTopProducts>>;
-}> = async ({ res, query }) => {
+}> = async ({ res, query,req }) => {
   const { getBy, searchKeyword } = query as {
     getBy?: GetTopProductsBy;
     searchKeyword?: string;
   };
+  const userAgent = req.headers['user-agent'] ?? ''; 
+  const isMobile = /Mobile|Android/i.test(userAgent); 
+  const size = isMobile ? 2 : 12; 
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=60'
   );
   let topProducts;
-  topProducts = await getTopProducts(getBy, searchKeyword,'','2','1');
+  topProducts = await getTopProducts(getBy, searchKeyword, '', size.toString(), '1');
   const title = data.site.home.page;
   const description = data.site.home.description;
   return {
