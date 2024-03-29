@@ -99,6 +99,7 @@ export default function Home({
         ]);
         setPage(nextPage);
       }
+     
     } else {
       setHasMore(false);
     }
@@ -266,7 +267,7 @@ export default function Home({
                             : 'grid-cols-1 lg:grid-cols-2'
                         }`}
                       >
-                        {topProducts.homePageProductDetails.map(
+                        {products.map(
                           (product: any) => (
                             <TopProductItem
                               view={view}
