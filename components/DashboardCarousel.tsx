@@ -59,23 +59,23 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                   prefetch={false}
                   onClick={() => addProduct(image.imageForVenderId)}
                 >
-                  <Image
-                    className='hidden sm:block'
-                    fill
+                  <img
+                    className='hidden sm:block w-full'
+                  
                     src={image.imagePath}
                     alt={image.imageName}
-                    priority={true}
-                    loading='eager'
+                    // priority={true}
+                    // loading='eager'
                   />
 
-                  <Image
-                    className='block sm:hidden'
-                    fill
+                  <img
+                    className='block sm:hidden w-full'
+                    
                     src={image.mobileImageurl}
                     alt={image.imageName}
-                    priority={true}
-                    loading='eager'
-                    quality={60}
+                    // priority={true}
+                    // loading='eager'
+                    // quality={60}
                   />
                 </Link>
               </div>
