@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/inline-script-id */
 /* eslint-disable @next/next/no-script-in-head */
-import Head from 'next/head';
+
 import { Suspense, useEffect, useState } from 'react';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getMaintainance, getTopProducts } from '@/services/spot-prices';
@@ -127,7 +127,7 @@ export default function Home({
   };
   return (
     <>
-      <Head>
+      <head>
         <title>{title}</title>
         {/*---------- Thumbnail code modified start*/}
         <meta name='twitter:url' content={`${process.env.WEBSITE_URL}`} />
@@ -170,7 +170,7 @@ export default function Home({
           }}
           key='product-jsonld'
         ></script>
-      </Head>
+      </head>
       <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
           <div>

@@ -3,7 +3,7 @@ import TooltipStatus from '@/components/TooltipStatus';
 import { selectUser } from '@/features/userSlice';
 import { addProdBuyClicksLog } from '@/services/spot-prices';
 import { toCurrency } from '@/utils/utilities';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -57,25 +57,25 @@ function GridView({
     >
       <div className='mt-5 hidden md:block' id='Desktopview'>
         <Link href={'/' + shortName} aria-label={productName} prefetch={false}>
-          <Image
+          <img
             src={imageUrl}
             alt={productName ?? ''}
-            width={500}
-            height={500}
-            className='md:h-28 md:w-28 lg:h-28 lg:w-28 '
-            priority={false}
+            // width={500}
+            // height={500}
+            className='md:h-28 md:w-28 lg:h-28 lg:w-28 w-[50px]'
+            // priority={false}
           />
         </Link>
       </div>
       <div className='mt-20 md:hidden' id='Mobileview'>
         <Link href={'/' + shortName} aria-label={productName} prefetch={false}>
-          <Image
+          <img
             src={mobileImageurl}
             alt={productName ?? ''}
-            width={200}
-            height={200}
-            className='-mt-20 h-20 w-20'
-            priority={true}
+            // width={200}
+            // height={200}
+            className='-mt-20 h-20 w-20 w-50px'
+            // priority={true}
             loading='eager'
           />
         </Link>
@@ -197,14 +197,14 @@ function DetaildView({
             aria-label={productName}
             prefetch={false}
           >
-            <Image
+            <img
               src={imageUrl}
               alt={productName ?? ''}
-              width={500}
-              height={500}
-              className='sm:h-28 md:h-auto'
-              priority={true}
-              loading='eager'
+              // width={500}
+              // height={500}
+              className='sm:h-28 md:h-auto w-[50px]'
+              // priority={true}
+              // loading='eager'
             />
           </Link>
         </div>
@@ -214,14 +214,14 @@ function DetaildView({
             aria-label={productName}
             prefetch={false}
           >
-            <Image
+            <img
               src={mobileImageurl}
               alt={productName ?? ''}
-              width={100}
-              height={100}
-              className='h-auto w-auto'
-              priority={true}
-              loading='eager'
+              // width={100}
+              // height={100}
+              className='h-auto  w-[50px]'
+              // priority={true}
+              // loading='eager'
             />
           </Link>
         </div>
