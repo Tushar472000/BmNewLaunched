@@ -1,10 +1,7 @@
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import Head from 'next/head';
 import { addProdBuyClicksLog } from '@/services/spot-prices';
 import { useSelector } from 'react-redux';
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { selectUser } from '@/features/userSlice';
 import { DashboardCarouselProps } from '@/interfaces/propsinterfaces';
 export default function DashboardCarousel({ images }: DashboardCarouselProps) {
@@ -35,11 +32,11 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   };
   return (
     <>
-      <Head>
+      <head>
         <link rel='preload' as='image' href={images[0].mobileImageurl}></link>
         <link rel='preload' as='image' href={images[1].mobileImageurl}></link>
         <link rel='preload' as='image' href={images[0].imagePath}></link>
-      </Head>
+      </head>
       <Suspense
         fallback={
           <section className='relative h-40 w-full bg-gray-400 sm:h-44 md:mt-2 md:h-40 lg:h-60 xl:h-80'></section>

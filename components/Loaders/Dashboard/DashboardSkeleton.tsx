@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { GoFlame } from 'react-icons/go';
 import { GridViewSkeleton } from '../Grid/GridViewSkeleton';
 export default function DashboardSkeleton() {
-  const [view, setView] = useState<'detailed' | 'grid'>('grid');
   return (
     <div>
       {/****************** GRADIENT AND CAROUSEL PULSE *****************/}
@@ -47,9 +44,9 @@ export default function DashboardSkeleton() {
             <div className='hidden gap-6 self-end md:flex md:self-auto'>
               {/****************** DETAILED VIEW BUTTON *****************/}
               <button
-                onClick={() => setView('detailed')}
+                
                 className={`flex items-center gap-2 px-4 py-2 ${
-                  view === 'detailed'
+                  '1' !== '1'
                     ? 'rounded-md bg-primary text-white'
                     : 'bg-white'
                 }`}
@@ -58,9 +55,9 @@ export default function DashboardSkeleton() {
               </button>
               {/****************** GRID VIEW BUTTON *****************/}
               <button
-                onClick={() => setView('grid')}
+             
                 className={`flex items-center gap-2 px-4 py-2 ${
-                  view === 'grid'
+                  '1' === '1'
                     ? 'rounded-md bg-primary text-white'
                     : 'bg-white'
                 }`}
