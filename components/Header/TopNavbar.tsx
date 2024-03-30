@@ -1,7 +1,6 @@
 import data from '@/data';
 import { AnimatePresence } from 'framer-motion';
 import { signOut, useSession } from 'next-auth/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import IconMenu from '../icons/IconMenu';
@@ -11,7 +10,6 @@ import Modal from '../ModalForm/Modal';
 import useToggle from '@/hooks/useToggle';
 import { useRouter } from 'next/router';
 import MegaMenu from '../megaMenu';
-import Head from 'next/head';
 import useOnClickOutside from '@/hooks/useOnclickOutside';
 import { CgShare } from 'react-icons/cg';
 import { GetCustomerDetails, createUser, login } from '@/services/spot-prices';
@@ -110,7 +108,7 @@ export default function TopNavbar() {
   }, [showMobileMenu]);
   return (
     <>
-      <Head>
+      <head>
         <link
           rel='preload'
           href='https://res.cloudinary.com/bullionmentor/image/upload/Icons/avatar_lpmhnb.webp'
@@ -123,7 +121,7 @@ export default function TopNavbar() {
           rel='preload'
           href='https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo-mob.webp'
         />
-      </Head>
+      </head>
       <div className='z-30 w-full bg-secondary-dark text-white'>
         <div className='container relative mx-auto flex flex-row items-center py-2 text-sm lg:py-2.5'>
           {/*********************** HAMBURGER MENU ICON ***********************/}
@@ -136,7 +134,7 @@ export default function TopNavbar() {
           </button>
           {/********************** MOBILE LOGO ***********************/}
           <Link className='lg:hidden' href={'/'} passHref prefetch={false}>
-            <Image
+            <img
               src='https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo-mob.webp'
               width={50}
               height={50}
@@ -151,7 +149,7 @@ export default function TopNavbar() {
             passHref
             prefetch={false}
           >
-            <Image
+            <img
               src='https://res.cloudinary.com/bullionmentor/image/upload/v1690806037/Images-Icons/BBD-horizontal.webp'
               alt={data.site.home.page}
               height={300}
@@ -310,7 +308,7 @@ export default function TopNavbar() {
                   className='flex cursor-pointer flex-row items-center justify-end gap-1'
                   onClick={() => setDropdown(true)}
                 >
-                  <Image
+                  <img
                     src='https://res.cloudinary.com/bullionmentor/image/upload/Icons/avatar_lpmhnb.webp'
                     alt={user.user.name}
                     height={25}
