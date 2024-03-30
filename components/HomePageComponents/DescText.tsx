@@ -1,7 +1,5 @@
-import Link from 'next/link';
 import { Suspense } from 'react';
-import { featCardProps
- } from '@/interfaces/typeinterfaces';
+import { featCardProps } from '@/interfaces/typeinterfaces';
 export default function DescText() {
   const arr = [
     {
@@ -20,14 +18,13 @@ export default function DescText() {
       description: [
         <p key={2}>
           Create your own{' '}
-          <Link
+          <a
             href='/observations'
             target='_blank'
             className='font-medium text-blue-500 decoration-2'
-            prefetch={false}
           >
             Observation list
-          </Link>{' '}
+          </a>{' '}
           to monitor specific bullion products of interest, enabling you to
           track their prices and market movement closely.
         </p>
@@ -39,23 +36,21 @@ export default function DescText() {
       description: [
         <p key={3}>
           Explore an extensive catalog with a diverse selection of{' '}
-          <Link
+          <a
             href='/gold'
             target='_blank'
             className='font-medium text-blue-500 decoration-2'
-            prefetch={false}
           >
             Gold
-          </Link>
+          </a>
           ,{' '}
-          <Link
+          <a
             href='/silver'
             target='_blank'
             className='font-medium text-blue-500 decoration-2'
-            prefetch={false}
           >
             Silver
-          </Link>
+          </a>
           , and other precious metals, ensuring you have a wide range of options
           to choose from.
         </p>
@@ -96,14 +91,13 @@ export default function DescText() {
           By comparing prices and professional insights, you can take control of
           your bullion assets. With our cutting-edge technology, you&apos;ll
           receive the best deal from{' '}
-          <Link
+          <a
             href='/dealer-review'
             target='_blank'
             className='font-medium text-blue-500 decoration-2'
-            prefetch={false}
           >
             Reputable Dealers
-          </Link>{' '}
+          </a>{' '}
           based on real-time quotes. Explore our comprehensive listings and
           discover the most competitive prices on precious metals, all in one
           convenient place.

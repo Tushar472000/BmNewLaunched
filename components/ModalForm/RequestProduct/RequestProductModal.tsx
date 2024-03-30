@@ -6,7 +6,6 @@ import IconX from '../../icons/IconX';
 import ErrorModal from './error';
 import RequestProductForm from './RequestProductForm';
 import RequestSuccess from './requestSuccess';
-
 type RequestProductModalFormProps = {
   closeModal: () => void;
   handleClose?: () => void;

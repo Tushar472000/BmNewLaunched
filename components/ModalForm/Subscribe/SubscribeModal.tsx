@@ -6,8 +6,6 @@ import IconX from '../../icons/IconX';
 import ErrorModal from './error';
 import SubscribeForm from './SubscribeForm';
 import SubscribeSuccess from './success';
-
-
 export default function SubscribeModal({
   closeModal
 }: {
