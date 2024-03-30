@@ -50,7 +50,7 @@ function GridView({
   };
   return (
     <Suspense fallback={<GridViewSkeleton />}>
-       {hydrated === true ? (
+    
     <div
       key={productId}
       className='flex flex-col items-center rounded-[13px] pt-2 pb-3 text-sm shadow-[1px_1px_1px_rgba(71,71,71,20%)] md:pb-4 xl:p-5 md:p-4'
@@ -139,9 +139,7 @@ function GridView({
         </div>
       </div>
     </div>
-     ) : (
-      <GridViewSkeleton/>
-    )}
+     
     </Suspense>
   );
 }
