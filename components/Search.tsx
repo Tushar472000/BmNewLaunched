@@ -6,7 +6,6 @@ import SearchResults from './SearchResults';
 import { MdCancel } from 'react-icons/md';
 import useOnClickOutside from '@/hooks/useOnclickOutside';
 import SearchSpinner from './Loaders/SearchSpinner';
-
 const  pageSize=12;
 const  pageNumber= 1;
 export default function Search() {
