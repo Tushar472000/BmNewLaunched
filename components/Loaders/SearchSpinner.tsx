@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-import { BounceLoader } from 'react-spinners';
-
+import BounceLoader from 'react-spinners/BounceLoader';
 export default function SearchSpinner() {
   return (
     <motion.div

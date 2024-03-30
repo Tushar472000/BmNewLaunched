@@ -1,4 +1,6 @@
-import { featCardProps } from '@/interfaces/typeinterfaces';
+import Link from 'next/link';
+import { featCardProps
+ } from '@/interfaces/typeinterfaces';
 export default function DescText() {
   const arr = [
     {
@@ -17,13 +19,14 @@ export default function DescText() {
       description: [
         <p key={2}>
           Create your own{' '}
-          <a
+          <Link
             href='/observations'
             target='_blank'
             className='font-medium text-blue-500 decoration-2'
+            prefetch={false}
           >
             Observation list
-          </a>{' '}
+          </Link>{' '}
           to monitor specific bullion products of interest, enabling you to
           track their prices and market movement closely.
         </p>
@@ -35,21 +38,23 @@ export default function DescText() {
       description: [
         <p key={3}>
           Explore an extensive catalog with a diverse selection of{' '}
-          <a
+          <Link
             href='/gold'
             target='_blank'
             className='font-medium text-blue-500 decoration-2'
+            prefetch={false}
           >
             Gold
-          </a>
+          </Link>
           ,{' '}
-          <a
+          <Link
             href='/silver'
             target='_blank'
             className='font-medium text-blue-500 decoration-2'
+            prefetch={false}
           >
             Silver
-          </a>
+          </Link>
           , and other precious metals, ensuring you have a wide range of options
           to choose from.
         </p>
@@ -77,51 +82,54 @@ export default function DescText() {
     }
   ];
   return (
-    <section className='container mx-auto '>
-      <p className='mt-8 text-lg font-semibold text-dark-black md:text-xl'>
-        Welcome to BullionMentor!
+   
+      <section className='container mx-auto '>
+        <p className='mt-8 text-lg font-semibold text-dark-black md:text-xl'>
+          Welcome to BullionMentor!
+          <br />
+        </p>
+        <p className='text-xs text-gray-500 md:text-base '>
+          Your Price Comparison Expertise for Bullion Investments.
+        </p>
+        <p className='text-xs text-gray-500 md:text-base'>
+          By comparing prices and professional insights, you can take control of
+          your bullion assets. With our cutting-edge technology, you&apos;ll
+          receive the best deal from{' '}
+          <Link
+            href='/dealer-review'
+            target='_blank'
+            className='font-medium text-blue-500 decoration-2'
+            prefetch={false}
+          >
+            Reputable Dealers
+          </Link>{' '}
+          based on real-time quotes. Explore our comprehensive listings and
+          discover the most competitive prices on precious metals, all in one
+          convenient place.
+        </p>
         <br />
-      </p>
-      <p className='text-xs text-gray-500 md:text-base '>
-        Your Price Comparison Expertise for Bullion Investments.
-      </p>
-      <p className='text-xs text-gray-500 md:text-base'>
-        By comparing prices and professional insights, you can take control of
-        your bullion assets. With our cutting-edge technology, you&apos;ll
-        receive the best deal from{' '}
-        <a
-          href='/dealer-review'
-          target='_blank'
-          className='font-medium text-blue-500 decoration-2'
-        >
-          Reputable Dealers
-        </a>{' '}
-        based on real-time quotes. Explore our comprehensive listings and
-        discover the most competitive prices on precious metals, all in one
-        convenient place.
-      </p>
-      <br />
-      <p className='text-lg font-semibold text-dark-black md:text-xl'>
-        Key features
-        <br />
-      </p>
-      <div className='mt-3 grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-2'>
-        {arr.map((values: any, index: number) => {
-          return (
-            <FeatCard
-              title={values.title}
-              description={values.description}
-              key={index}
-            />
-          );
-        })}
-      </div>
-      <p className='pt-3 text-xs text-gray-500 md:text-base'>
-        Investing in precious metals can be stressful, but with Bullion Mentor
-        ,you can effortlessly get in charge of your investments. Trust us to be
-        your partner in bullion investments!
-      </p>
-    </section>
+        <p className='text-lg font-semibold text-dark-black md:text-xl'>
+          Key features
+          <br />
+        </p>
+        <div className='mt-3 grid grid-cols-1 gap-x-4 gap-y-6 lg:grid-cols-2'>
+          {arr.map((values: any, index: number) => {
+            return (
+              <FeatCard
+                title={values.title}
+                description={values.description}
+                key={index}
+              />
+            );
+          })}
+        </div>
+        <p className='pt-3 text-xs text-gray-500 md:text-base'>
+          Investing in precious metals can be stressful, but with Bullion Mentor
+          ,you can effortlessly get in charge of your investments. Trust us to
+          be your partner in bullion investments!
+        </p>
+      </section>
+
   );
 }
 export function FeatCard({ title, description }: featCardProps) {
