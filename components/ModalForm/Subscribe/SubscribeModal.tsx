@@ -6,7 +6,7 @@ import IconX from '../../icons/IconX';
 import ErrorModal from './error';
 import SubscribeForm from './SubscribeForm';
 import SubscribeSuccess from './success';
-import Image from 'next/image';
+
 
 export default function SubscribeModal({
   closeModal
@@ -49,7 +49,7 @@ export default function SubscribeModal({
           <IconX className='h-5 w-5' />
         </div>
         <div className='-mt-4 -ml-5 hidden h-[35rem] w-56 md:flex'>
-          <Image
+          <img
             height={400}
             width={400}
             src='https://res.cloudinary.com/bullionmentor/image/upload/Images-Icons/login-banner.webp'
