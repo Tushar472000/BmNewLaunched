@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/inline-script-id */
 /* eslint-disable @next/next/no-script-in-head */
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState,memo } from 'react';
 import type {
   GetServerSideProps,
   InferGetServerSidePropsType
@@ -48,7 +48,7 @@ const SearchSpinner = dynamic(
   () => import('@/components/Loaders/SearchSpinner')
 );
 const InfiniteScroll = dynamic(() => import('react-infinite-scroll-component'));
-export default function Home({
+const Home =memo(function Home({
   title,
   description,
   topProducts
@@ -302,7 +302,7 @@ export default function Home({
       </Suspense>
     </>
   );
-}
+})
 export const getServerSideProps: GetServerSideProps<{
   title: any;
   description: any;
