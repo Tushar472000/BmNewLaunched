@@ -1,27 +1,24 @@
 import React from 'react'
-import Image from 'next/image';
-import Link from 'next/link';
+
 const StaticHeroImages = ({staticImage}:any) => {
   return (
     <>
        <div className='relative hidden h-32 w-fit md:mt-2 md:block md:h-40 md:w-auto lg:h-60 xl:h-80'>
                   {staticImage?.imagePath && (
-                    <Link
+                    <a
                       target='_blank'
                       href={staticImage.eventRedirectiveUrl}
-                      passHref
-                      prefetch={false}
+                
                     >
-                      <Image
-                        fill
+                      <img
+                    
                         aria-label={staticImage.imageName}
-                        className='rounded-lg object-contain  md:object-fill'
+                        className='rounded-lg object-contain  md:object-fill w-full'
                         src={staticImage?.imagePath}
                         alt={staticImage?.imageName}
-                        priority={false}
-                        loading='lazy'
+                       
                       />
-                    </Link>
+                    </a>
                   )}
          </div>
     </>

@@ -6,7 +6,7 @@ import IconX from '../../icons/IconX';
 import ErrorModal from './error';
 import RequestProductForm from './RequestProductForm';
 import RequestSuccess from './requestSuccess';
-import Image from 'next/image';
+
 type RequestProductModalFormProps = {
   closeModal: () => void;
   handleClose?: () => void;
@@ -60,7 +60,7 @@ export default function RequestProductModal({
           <IconX className='h-5 w-5' />
         </div>
         <div className='-mt-4 -ml-5 hidden h-[35rem] w-56 md:flex'>
-          <Image
+          <img
             height={400}
             width={400}
             src='https://res.cloudinary.com/bullionmentor/image/upload/Images-Icons/login-banner.webp'

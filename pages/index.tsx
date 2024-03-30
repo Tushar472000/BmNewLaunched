@@ -3,7 +3,10 @@
 /* eslint-disable @next/next/no-script-in-head */
 
 import { Suspense, useEffect, useState } from 'react';
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import type {
+  GetServerSideProps,
+  InferGetServerSidePropsType
+} from 'next/types';
 import { getMaintainance, getTopProducts } from '@/services/spot-prices';
 import { GetTopProductsBy } from '@/interfaces/typeinterfaces';
 import data from '@/data';
@@ -37,8 +40,13 @@ const LeftAdvertisements = dynamic(
 );
 const StaticHeroImages = dynamic(() => import('@/components/StaticHeroImages'));
 const Search = dynamic(() => import('@/components/Search'));
-const TopProductItem = dynamic(() => import('@/containers/home/TopProductItem')); const GoogleAdsCode = dynamic(() => import('@/components/GoogleAdsCode'));
-const SearchSpinner = dynamic(() => import('@/components/Loaders/SearchSpinner'));
+const TopProductItem = dynamic(
+  () => import('@/containers/home/TopProductItem')
+);
+const GoogleAdsCode = dynamic(() => import('@/components/GoogleAdsCode'));
+const SearchSpinner = dynamic(
+  () => import('@/components/Loaders/SearchSpinner')
+);
 const InfiniteScroll = dynamic(() => import('react-infinite-scroll-component'));
 export default function Home({
   title,
@@ -101,7 +109,6 @@ export default function Home({
         ]);
         setPage(nextPage);
       }
-     
     } else {
       setHasMore(false);
     }
@@ -254,33 +261,30 @@ export default function Home({
                     </div>
                   </div>
                   {/******************* PRODUCTS ARRAY *******************/}
-                 
-                    <InfiniteScroll
-                      dataLength={products.length}
-                      next={loadMoreProducts}
-                      hasMore={hasMore}
-                      loader={<SearchSpinner />}
-                      scrollThreshold={0.2}
+
+                  <InfiniteScroll
+                    dataLength={products.length}
+                    next={loadMoreProducts}
+                    hasMore={hasMore}
+                    loader={<SearchSpinner />}
+                    scrollThreshold={0.2}
+                  >
+                    <div
+                      className={`grid min-h-[200px] gap-x-2 gap-y-4 md:gap-y-4 ${
+                        view === 'grid'
+                          ? 'grid-cols-2 xl:grid-cols-4 '
+                          : 'grid-cols-1 lg:grid-cols-2'
+                      }`}
                     >
-                      <div
-                        className={`grid gap-x-2 gap-y-4 md:gap-y-4 min-h-[200px] ${
-                          view === 'grid'
-                            ? 'grid-cols-2 xl:grid-cols-4 '
-                            : 'grid-cols-1 lg:grid-cols-2'
-                        }`}
-                      >
-                        {products.map(
-                          (product: any) => (
-                            <TopProductItem
-                              view={view}
-                              key={product.productId}
-                              {...product}
-                            />
-                          )
-                        )}
-                      </div>
-                    </InfiniteScroll>
-                
+                      {products.map((product: any) => (
+                        <TopProductItem
+                          view={view}
+                          key={product.productId}
+                          {...product}
+                        />
+                      ))}
+                    </div>
+                  </InfiniteScroll>
                 </div>
               </div>
             </section>
@@ -303,20 +307,26 @@ export const getServerSideProps: GetServerSideProps<{
   title: any;
   description: any;
   topProducts?: Awaited<ReturnType<typeof getTopProducts>>;
-}> = async ({ res, query,req }) => {
+}> = async ({ res, query, req }) => {
   const { getBy, searchKeyword } = query as {
     getBy?: GetTopProductsBy;
     searchKeyword?: string;
   };
-  const userAgent = req.headers['user-agent'] ?? ''; 
-  const isMobile = /Mobile|Android/i.test(userAgent); 
-  const size = isMobile ? 4 : 16; 
+  const userAgent = req.headers['user-agent'] ?? '';
+  const isMobile = /Mobile|Android/i.test(userAgent);
+  const size = isMobile ? 4 : 16;
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=60'
   );
   let topProducts;
-  topProducts = await getTopProducts(getBy, searchKeyword, '', size.toString(), '1');
+  topProducts = await getTopProducts(
+    getBy,
+    searchKeyword,
+    '',
+    size.toString(),
+    '1'
+  );
   const title = data.site.home.page;
   const description = data.site.home.description;
   return {
