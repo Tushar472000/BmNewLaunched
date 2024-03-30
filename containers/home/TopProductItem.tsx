@@ -5,9 +5,10 @@ import { addProdBuyClicksLog } from '@/services/spot-prices';
 import { toCurrency } from '@/utils/utilities';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ProductItem } from '@/interfaces/typeinterfaces';
+import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 function GridView({
   productId,
   imageUrl,
@@ -46,6 +47,7 @@ function GridView({
     );
   };
   return (
+    <Suspense fallback={<GridViewSkeleton />}>
     <div
       key={productId}
       className='flex flex-col items-center rounded-[13px] pt-2 pb-3 text-sm shadow-[1px_1px_1px_rgba(71,71,71,20%)] md:pb-4 xl:p-5 md:p-4'
@@ -134,6 +136,7 @@ function GridView({
         </div>
       </div>
     </div>
+    </Suspense>
   );
 }
 function DetaildView({
