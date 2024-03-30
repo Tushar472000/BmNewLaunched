@@ -14,15 +14,15 @@ import { IoGridSharp } from 'react-icons/io5';
 import dynamic from 'next/dynamic';
 import DashboardCarousel from '@/components/DashboardCarousel';
 import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton';
-import TopProductItem from '@/containers/home/TopProductItem';
+// import TopProductItem from '@/containers/home/TopProductItem';
 import DashboardImages from '@/services/DashboardImages';
 import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
 import Search from '@/components/Search';
-import GoogleAdsCode from '@/components/GoogleAdsCode';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import SearchSpinner from '@/components/Loaders/SearchSpinner';
+// import GoogleAdsCode from '@/components/GoogleAdsCode';
+// import InfiniteScroll from 'react-infinite-scroll-component';
+// import SearchSpinner from '@/components/Loaders/SearchSpinner';
 // -------------------------- Dynamic import -------------------//
 const RequestProductModal = dynamic(
   () => import('@/components/ModalForm/RequestProduct/RequestProductModal')
@@ -38,6 +38,9 @@ const LeftAdvertisements = dynamic(
 );
 const StaticHeroImages = dynamic(() => import('@/components/StaticHeroImages'));
 // const Search = dynamic(() => import('@/components/Search'));
+const TopProductItem = dynamic(() => import('@/containers/home/TopProductItem')); const GoogleAdsCode = dynamic(() => import('@/components/GoogleAdsCode'));
+const SearchSpinner = dynamic(() => import('@/components/Loaders/SearchSpinner'));
+const InfiniteScroll = dynamic(() => import('react-infinite-scroll-component'));
 export default function Home({
   title,
   description,
@@ -55,10 +58,10 @@ export default function Home({
     topProducts.homePageProductDetails
   );
   useEffect(() => {
-    // const check = async () => {
-    //   await getMaintainance();
-    // };
-    // check();
+    const check = async () => {
+      await getMaintainance();
+    };
+    check();
     const dashboardImages = DashboardImages();
     setDynamicImages(
       dashboardImages.filter((image) => image.isStatic === false)
