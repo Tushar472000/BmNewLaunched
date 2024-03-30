@@ -25,7 +25,7 @@ import { isVisited, selectUser } from '@/features/userSlice';
 // import GoogleAdsCode from '@/components/GoogleAdsCode';
 // import InfiniteScroll from 'react-infinite-scroll-component';
 // import SearchSpinner from '@/components/Loaders/SearchSpinner';
-// -------------------------- Dynamic import -------------------//
+// -------------------------- Dynamic import -------------------///
 const RequestProductModal = dynamic(
   () => import('@/components/ModalForm/RequestProduct/RequestProductModal')
 );
