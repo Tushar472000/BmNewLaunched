@@ -1,7 +1,6 @@
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
 import { addProdBuyClicksLog } from '@/services/spot-prices';
 import { useSelector } from 'react-redux';
 import { Suspense, useEffect,useState } from 'react';

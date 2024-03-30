@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/inline-script-id */
 /* eslint-disable @next/next/no-script-in-head */
-
 import { Suspense, useEffect, useState } from 'react';
 import type {
   GetServerSideProps,
