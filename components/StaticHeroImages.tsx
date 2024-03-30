@@ -7,6 +7,7 @@ const StaticHeroImages = ({staticImage}:any) => {
                   {staticImage?.imagePath && (
                     <a
                       target='_blank'
+                      rel="noreferrer"
                       href={staticImage.eventRedirectiveUrl}
                 
                     >
