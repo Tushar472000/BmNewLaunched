@@ -16,10 +16,9 @@ import DashboardCarousel from '@/components/DashboardCarousel';
 import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton';
 // import TopProductItem from '@/containers/home/TopProductItem';
 import DashboardImages from '@/services/DashboardImages';
-import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
-import Search from '@/components/Search';
+// import Search from '@/components/Search';
 // import GoogleAdsCode from '@/components/GoogleAdsCode';
 // import InfiniteScroll from 'react-infinite-scroll-component';
 // import SearchSpinner from '@/components/Loaders/SearchSpinner';
@@ -37,7 +36,7 @@ const LeftAdvertisements = dynamic(
   () => import('@/components/LeftAdvertisements')
 );
 const StaticHeroImages = dynamic(() => import('@/components/StaticHeroImages'));
-// const Search = dynamic(() => import('@/components/Search'));
+const Search = dynamic(() => import('@/components/Search'));
 const TopProductItem = dynamic(() => import('@/containers/home/TopProductItem')); const GoogleAdsCode = dynamic(() => import('@/components/GoogleAdsCode'));
 const SearchSpinner = dynamic(() => import('@/components/Loaders/SearchSpinner'));
 const InfiniteScroll = dynamic(() => import('react-infinite-scroll-component'));
@@ -255,7 +254,7 @@ export default function Home({
                     </div>
                   </div>
                   {/******************* PRODUCTS ARRAY *******************/}
-                  <Suspense fallback={<GridViewSkeleton />}>
+                 
                     <InfiniteScroll
                       dataLength={products.length}
                       next={loadMoreProducts}
@@ -281,7 +280,7 @@ export default function Home({
                         )}
                       </div>
                     </InfiniteScroll>
-                  </Suspense>
+                
                 </div>
               </div>
             </section>
