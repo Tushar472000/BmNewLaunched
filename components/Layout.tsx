@@ -1,9 +1,11 @@
+import Head from 'next/head';
 import { LayoutProps } from '@/interfaces/typeinterfaces';
 import Header from './Header';
+import { NextRequest } from 'next/server';
 import dynamic from 'next/dynamic';
 // -------------------------- Dynamic import -------------------//
 const Footer = dynamic(() => import('./Footer'));
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children }: LayoutProps, req: NextRequest) {
   const addProductJsonLd = () => {
     if (window.matchMedia('(min-width: 768px)').matches) {
     return {
@@ -39,7 +41,7 @@ export default function Layout({ children }: LayoutProps) {
   }
     return (
       <>
-        <head>
+        <Head>
           <link
             rel='icon'
             href='https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-favicon.png'
@@ -61,7 +63,7 @@ export default function Layout({ children }: LayoutProps) {
           <noscript
             dangerouslySetInnerHTML={noscriptfb()}
           />
-        </head>
+        </Head>
         <Header />
         <main className='min-h-screen pt-[66px] lg:pt-[100px]'>{children}</main>
         <Footer />

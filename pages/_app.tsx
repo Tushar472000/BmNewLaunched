@@ -2,11 +2,13 @@ import '@/styles/globals.css';
 import { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import Layout from '@/components/Layout';
-import { useEffect,} from 'react';
+import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import store from '@/store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import Script from 'next/script';
+import Head from 'next/head';
 import data from '@/data';
 export default function App({
   Component,
@@ -22,7 +24,7 @@ export default function App({
 
   return (
     <>
-      <head>
+      <Head>
         <title>{pageProps?.title}</title>
         <meta name='description' content={pageProps?.description} key='desc' />
         <meta property='og:type' content={data.OGTags.home.type} />
@@ -35,7 +37,7 @@ export default function App({
           content='https://res.cloudinary.com/bullionmentor/image/upload/Images-Icons/thumbnail.webp' // Path to your thumbnail image
         /> */}
         {/* <link rel='canonical' href={`${process.env.WEBSITE_URL}`} /> */}
-      </head>
+      </Head>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <SessionProvider session={session}>
