@@ -48,7 +48,7 @@ function GridView({
   return (
     <div
       key={productId}
-      className='flex flex-col items-center rounded-[13px] pt-2 pb-3 text-sm shadow-[1px_1px_4px_rgb(71,71,71,20%)] md:pb-4 xl:p-5 md:p-4'
+      className='flex flex-col items-center rounded-[13px] pt-2 pb-3 text-sm shadow-[1px_1px_4px_rgb(71,71,71,20%)] md:p-4 md:pb-4 xl:p-5'
     >
       <div className='mt-5 hidden md:block' id='Desktopview'>
         <Link href={'/' + shortName} aria-label={productName} prefetch={false}>
@@ -94,9 +94,10 @@ function GridView({
           <TooltipStatus view='grid' productName={productName} />
         )}
       </div>
-      <div className=' flex flex-col items-center w-max'>
+      <div className=' flex w-max flex-col items-center'>
         <span className='font-medium  text-[#AF0E0E]'>
-          {toCurrency(asLowAs)}{weightCategoryParam}
+          {toCurrency(asLowAs)}
+          {weightCategoryParam}
         </span>
         <span className='font-normal text-[#656565] '>
           <>{dealers ?? '-'}</>
@@ -253,7 +254,8 @@ function DetaildView({
             )}
           </div>
           <span className='font-medium text-[#AF0E0E]'>
-          {toCurrency(asLowAs)}{weightCategoryParam}
+            {toCurrency(asLowAs)}
+            {weightCategoryParam}
           </span>
           <span className='font-normal text-[#656565]'>
             <>{dealers ?? '-'}</>

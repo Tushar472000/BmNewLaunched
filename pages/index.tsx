@@ -53,8 +53,7 @@ export default function Home() {
   const [staticImage, setStaticImage] = useState<any>();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [products, setProducts] = useState<any[]>(
-   
+  const [products, setProducts] = useState<any>( 
   );
   const [abc, setAbc] = useState(false);
   useEffect(() => {
@@ -130,18 +129,18 @@ export default function Home() {
     url: 'https://www.bullionmentor.com/',
     logo: 'https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo.webp'
   };
-  // const itemListElement = topProducts.homePageProductDetails.map(
-  //   (product: any, index: number) => ({
-  //     '@type': 'ListItem',
-  //     position: index + 1,
-  //     url: 'https://www.bullionmentor.com/' + product.shortName
-  //   })
-  // );
-  // const trendingProductsSchema = {
-  //   '@context': 'https://schema.org',
-  //   '@type': 'ItemList',
-  //   itemListElement: itemListElement
-  // };
+  const itemListElement = products?.homePageProductDetails!==undefined ? products.homePageProductDetails.map(
+    (product: any, index: number) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: 'https://www.bullionmentor.com/' + product.shortName
+    })
+  ):[];
+  const trendingProductsSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: itemListElement
+  };
   return (
     <>
       <head>
@@ -178,7 +177,7 @@ export default function Home() {
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
         />
-        {/* <script
+        <script
           async
           defer
           type='application/ld+json'
@@ -186,7 +185,7 @@ export default function Home() {
             __html: JSON.stringify(trendingProductsSchema)
           }}
           key='product-jsonld'
-        ></script> */}
+        ></script>
       </head>
       <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
