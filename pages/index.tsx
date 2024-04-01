@@ -47,11 +47,7 @@ const SearchSpinner = dynamic(
   () => import('@/components/Loaders/SearchSpinner')
 );
 const InfiniteScroll = dynamic(() => import('react-infinite-scroll-component'));
-export default function Home({
-  title,
-  description,
-  topProducts
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home() {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
   const [isRequestModal, toggleRequestModal] = useToggle();
   const [isSubscribeModal, toggleSubscribeModal] = useToggle();
@@ -60,9 +56,7 @@ export default function Home({
   const [staticImage, setStaticImage] = useState<any>();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [products, setProducts] = useState<any[]>(
-    topProducts.homePageProductDetails
-  );
+  const [products, setProducts] = useState<any[]>();
   useEffect(() => {
     const check = async () => {
       await getMaintainance();
@@ -86,8 +80,22 @@ export default function Home({
       }, 6000);
     }
   }, []);
+  useEffect(()=>{
+    const initialData = async ()=>{
+    let topProducts;
+    topProducts = await getTopProducts(
+      undefined,
+      undefined,
+      '',
+      '4',
+      '1'
+    );
+    setProducts(topProducts.homePageProductDetails);
+    }
+    initialData();
+  },[])
   const loadMoreProducts = async () => {
-    if (products.length != 16) {
+    if (products?.length != 16) {
       const getBy: GetTopProductsBy | undefined = 'NewLaunched';
       const searchKeyword = undefined;
       const nextPage = page + 1;
@@ -119,26 +127,26 @@ export default function Home({
     url: 'https://www.bullionmentor.com/',
     logo: 'https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo.webp'
   };
-  const itemListElement = topProducts.homePageProductDetails.map(
-    (product: any, index: number) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      url: 'https://www.bullionmentor.com/' + product.shortName
-    })
-  );
-  const trendingProductsSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: itemListElement
-  };
+  // const itemListElement = products?.homePageProductDetails.map(
+  //   (product: any, index: number) => ({
+  //     '@type': 'ListItem',
+  //     position: index + 1,
+  //     url: 'https://www.bullionmentor.com/' + product.shortName
+  //   })
+  // );
+  // const trendingProductsSchema = {
+  //   '@context': 'https://schema.org',
+  //   '@type': 'ItemList',
+  //   itemListElement: itemListElement
+  // };
   return (
     <>
       <head>
-        <title>{title}</title>
+        <title>{data.site.home.page}</title>
         {/*---------- Thumbnail code modified start*/}
         <meta name='twitter:url' content={`${process.env.WEBSITE_URL}`} />
-        <meta name='twitter:title' content={title} />
-        <meta name='twitter:description' content={description} />
+        <meta name='twitter:title' content={data.site.home.page} />
+        <meta name='twitter:description' content={data.site.home.description} />
         <meta name='twitter:card' content='summary' />
         <meta
           name='twitter:image'
@@ -167,7 +175,7 @@ export default function Home({
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
         />
-        <script
+        {/* <script
           async
           defer
           type='application/ld+json'
@@ -175,7 +183,7 @@ export default function Home({
             __html: JSON.stringify(trendingProductsSchema)
           }}
           key='product-jsonld'
-        ></script>
+        ></script> */}
       </head>
       <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
@@ -262,7 +270,7 @@ export default function Home({
                   {/******************* PRODUCTS ARRAY *******************/}
 
                   <InfiniteScroll
-                    dataLength={products.length}
+                    dataLength={products!==undefined?products.length:0}
                     next={loadMoreProducts}
                     hasMore={hasMore}
                     loader={<SearchSpinner />}
@@ -275,7 +283,7 @@ export default function Home({
                           : 'grid-cols-1 lg:grid-cols-2'
                       }`}
                     >
-                      {products.map((product: any) => (
+                      {products?.map((product: any) => (
                         <TopProductItem
                           view={view}
                           key={product.productId}
@@ -301,38 +309,39 @@ export default function Home({
       </Suspense>
     </>
   );
-}
-export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
-  topProducts?: Awaited<ReturnType<typeof getTopProducts>>;
-}> = async ({ res, query, req }) => {
-  const { getBy, searchKeyword } = query as {
-    getBy?: GetTopProductsBy;
-    searchKeyword?: string;
-  };
-  const userAgent = req.headers['user-agent'] ?? '';
-  const isMobile = /Mobile|Android/i.test(userAgent);
-  const size = isMobile ? 4 : 16;
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=60'
-  );
-  let topProducts;
-  topProducts = await getTopProducts(
-    getBy,
-    searchKeyword,
-    '',
-    size.toString(),
-    '1'
-  );
-  const title = data.site.home.page;
-  const description = data.site.home.description;
-  return {
-    props: {
-      title,
-      description,
-      topProducts
-    }
-  };
-};
+        }
+// }
+// export const getServerSideProps: GetServerSideProps<{
+//   title: any;
+//   description: any;
+//   topProducts?: Awaited<ReturnType<typeof getTopProducts>>;
+// }> = async ({ res, query, req }) => {
+//   const { getBy, searchKeyword } = query as {
+//     getBy?: GetTopProductsBy;
+//     searchKeyword?: string;
+//   };
+//   const userAgent = req.headers['user-agent'] ?? '';
+//   const isMobile = /Mobile|Android/i.test(userAgent);
+//   const size = isMobile ? 4 : 16;
+//   res.setHeader(
+//     'Cache-Control',
+//     'public, s-maxage=10, stale-while-revalidate=60'
+//   );
+//   let topProducts;
+//   topProducts = await getTopProducts(
+//     getBy,
+//     searchKeyword,
+//     '',
+//     size.toString(),
+//     '1'
+//   );
+//   const title = data.site.home.page;
+//   const description = data.site.home.description;
+//   return {
+//     props: {
+//       title,
+//       description,
+//       topProducts
+//     }
+//   };
+// };
