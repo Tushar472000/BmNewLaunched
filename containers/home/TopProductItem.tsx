@@ -3,10 +3,11 @@ import TooltipStatus from '@/components/TooltipStatus';
 import { selectUser } from '@/features/userSlice';
 import { addProdBuyClicksLog } from '@/services/spot-prices';
 import { toCurrency } from '@/utils/utilities';
-import { Suspense, useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ProductItem } from '@/interfaces/typeinterfaces';
-import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 function GridView({
   productId,
   imageUrl,
@@ -27,14 +28,12 @@ function GridView({
   const [tooltipStatus, setTooltipStatus] = useState(0);
   const [customerId, setCustomerId] = useState(0);
   const user = useSelector(selectUser);
-  const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     if (user.isLoggedin === false) {
       setCustomerId(0);
     } else {
       setCustomerId(user.user.id);
     }
-    setHydrated(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -47,51 +46,49 @@ function GridView({
     );
   };
   return (
-    <Suspense fallback={<GridViewSkeleton />}>
-    
     <div
       key={productId}
-      className='flex flex-col items-center rounded-[13px] pt-2 pb-3 text-sm shadow-[1px_1px_1px_rgba(71,71,71,20%)] md:pb-4 xl:p-5 md:p-4'
+      className='flex flex-col items-center rounded-[13px] pt-2 pb-3 text-sm shadow-[1px_1px_4px_rgb(71,71,71,20%)] md:pb-4 xl:p-5 md:p-4'
     >
       <div className='mt-5 hidden md:block' id='Desktopview'>
-        <a href={'/' + shortName} aria-label={productName}>
-          <img
+        <Link href={'/' + shortName} aria-label={productName} prefetch={false}>
+          <Image
             src={imageUrl}
             alt={productName ?? ''}
-            // width={500}
-            // height={500}
-            className='md:h-28 md:w-28 lg:h-28 lg:w-28 w-[50px]'
-            // priority={false}
+            width={500}
+            height={500}
+            className='md:h-28 md:w-28 lg:h-28 lg:w-28 '
+            priority={false}
           />
-        </a>
+        </Link>
       </div>
       <div className='mt-20 md:hidden' id='Mobileview'>
-        <a href={'/' + shortName} aria-label={productName}>
-          <img
+        <Link href={'/' + shortName} aria-label={productName} prefetch={false}>
+          <Image
             src={mobileImageurl}
             alt={productName ?? ''}
-            // width={200}
-            // height={200}
-            className='-mt-20 h-20 w-20 w-50px'
-            // priority={true}
+            width={200}
+            height={200}
+            className='-mt-20 h-20 w-20'
+            priority={true}
             loading='eager'
           />
-        </a>
+        </Link>
       </div>
       <div
         onMouseEnter={() => setTooltipStatus(3)}
         onMouseLeave={() => setTooltipStatus(0)}
       >
         <div className='mr-2 '>
-          <a
+          <Link
             href={'/' + shortName}
             aria-label={productName}
-          
+            prefetch={false}
           >
             <h3 className='my-1 h-10 text-center text-sm font-semibold md:mt-4  '>
               {productName.slice(0, 25)}...
             </h3>
-          </a>
+          </Link>
         </div>
         {tooltipStatus == 3 && (
           <TooltipStatus view='grid' productName={productName} />
@@ -113,31 +110,30 @@ function GridView({
               <div className='pt-2 pb-2 lg:mt-4'>
                 <div className=' my-1 border-t-2 border-solid border-gray-400' />
               </div>
-              <a
+              <Link
                 href={'/' + shortName}
                 className='group relative mb-2 inline-flex font-semibold text-blue-500 underline'
                 aria-label={`Compare ${productName}`}
-               
+                prefetch={false}
               >
                 <button className='hover:text-[#0F4463]'>Compare</button>
-              </a>
-              <a
+              </Link>
+              <Link
                 target={'_blank'}
                 href={competitorProductUrl}
-                aria-label={`Buy ${productName}`}       
+                aria-label={`Buy ${productName}`}
+                prefetch={false}
                 onClick={addProduct}
                 className='group relative inline-block w-full overflow-hidden rounded-full bg-primary py-2 font-medium text-white'
               >
                 <span className='absolute top-0 left-0  mb-0 flex h-0 w-full translate-y-0 transform bg-secondary opacity-90 transition-all duration-300 ease-out group-hover:h-full'></span>
                 <span className='relative'>Buy</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </div>
-     
-    </Suspense>
   );
 }
 function DetaildView({
@@ -183,44 +179,44 @@ function DetaildView({
     <>
       <div
         key={productId}
-        className='relative grid grid-cols-4 rounded-[13px] px-1 pb-2 text-sm shadow-[1px_1px_1px_rgba(71,71,71,20%)]'
+        className='relative grid grid-cols-4 rounded-[13px] px-1 pb-2 text-sm shadow-[1px_1px_4px_rgb(71,71,71,20%)]'
       >
         <div
           className='items-left col-span-1 hidden py-2 md:block'
           id='desktopview'
         >
-          <a
+          <Link
             href={'/' + shortName}
             aria-label={productName}
-        
+            prefetch={false}
           >
-            <img
+            <Image
               src={imageUrl}
               alt={productName ?? ''}
-              // width={500}
-              // height={500}
-              className='sm:h-28 md:h-auto w-[50px]'
-              // priority={true}
-              // loading='eager'
+              width={500}
+              height={500}
+              className='sm:h-28 md:h-auto'
+              priority={true}
+              loading='eager'
             />
-          </a>
+          </Link>
         </div>
         <div className='flex md:col-span-1 md:hidden md:py-2' id='mobileview'>
-          <a
+          <Link
             href={'/' + shortName}
             aria-label={productName}
-           
+            prefetch={false}
           >
-            <img
+            <Image
               src={mobileImageurl}
               alt={productName ?? ''}
-              // width={100}
-              // height={100}
-              className='h-auto  w-[50px]'
-              // priority={true}
-              // loading='eager'
+              width={100}
+              height={100}
+              className='h-auto w-auto'
+              priority={true}
+              loading='eager'
             />
-          </a>
+          </Link>
         </div>
         <div className='col-span-3 flex flex-col justify-start gap-1'>
           <div
@@ -229,10 +225,10 @@ function DetaildView({
             className='relative flex cursor-pointer flex-col justify-start gap-1 '
           >
             <div className='oneline'>
-              <a
+              <Link
                 href={'/' + shortName}
                 aria-label={productName}
-               
+                prefetch={false}
               >
                 <h3 className='mt-0 hidden h-10 text-sm font-semibold leading-5 sm:h-6  md:mt-2 md:block lg:mt-1 lg:h-5'>
                   {`${
@@ -241,7 +237,7 @@ function DetaildView({
                       : productName
                   }`}
                 </h3>
-              </a>
+              </Link>
             </div>
             <h3 className='mt-0  h-10 text-sm font-semibold sm:h-6 md:mt-4 md:hidden lg:mt-1 lg:h-8'>
               {productNameSlice}
@@ -270,27 +266,28 @@ function DetaildView({
           </div>
           <div className='sm:mx-2 sm:flex sm:items-center sm:gap-1'>
             <div className='sm:w-[45%] sm:text-center'>
-              <a
+              <Link
                 href={'/' + shortName}
                 className='group w-full font-semibold text-blue-500 underline decoration-blue-500 hover:text-[#0F4463] hover:underline'
                 aria-label={`Compare ${productName}`}
-                
+                prefetch={false}
               >
                 Compare
-              </a>
+              </Link>
             </div>
             <div className=' mx-5 hidden h-[20px] border-l-2 border-solid border-gray-300 sm:block'></div>
             <div className='mt-2 sm:w-full sm:text-center'>
-              <a
+              <Link
                 target={'_blank'}
                 href={competitorProductUrl}
                 aria-label={`Buy ${productName}`}
+                prefetch={false}
                 onClick={addProduct}
                 className='group relative inline-block overflow-hidden rounded-full bg-primary px-9 py-2 font-medium text-white sm:w-full'
               >
                 <span className='absolute top-0 left-0  mb-0 flex h-0 w-full translate-y-0 transform bg-secondary opacity-90 transition-all duration-300 ease-out group-hover:h-full '></span>
                 <span className='relative'>Buy</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
