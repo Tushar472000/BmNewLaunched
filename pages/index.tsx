@@ -271,7 +271,7 @@ export default function Home() {
                     </div>
                   </div>
                   {/******************* PRODUCTS ARRAY *******************/}
-                  {abc===true?<GridViewSkeleton />: <InfiniteScroll
+                  <InfiniteScroll
                     dataLength={products!==undefined?products.length:0}
                     next={loadMoreProducts}
                     hasMore={hasMore}
@@ -285,15 +285,21 @@ export default function Home() {
                           : 'grid-cols-1 lg:grid-cols-2'
                       }`}
                     >
-                      {products?.map((product: any) => (
+                       {abc===true? Array(4)
+                .fill(null)
+                .map((values: any, index: number) => (
+                  <GridViewSkeleton key={index} />
+                )):
+                      products?.map((product: any) => (
                         <TopProductItem
                           view={view}
                           key={product.productId}
                           {...product}
                         />
-                      ))}
+                      ))
+                    }
                     </div>
-                  </InfiniteScroll>}
+                  </InfiniteScroll>
                  
                 </div>
               </div>
