@@ -56,7 +56,9 @@ export default function Home() {
   const [staticImage, setStaticImage] = useState<any>();
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [products, setProducts] = useState<any[]>();
+  const [products, setProducts] = useState<any[]>(
+   
+  );
   useEffect(() => {
     const check = async () => {
       await getMaintainance();
@@ -80,8 +82,8 @@ export default function Home() {
       }, 6000);
     }
   }, []);
-  useEffect(()=>{
-    const initialData = async ()=>{
+  useEffect(() => {
+    const fetchData = async ()=>{
     let topProducts;
     topProducts = await getTopProducts(
       undefined,
@@ -90,10 +92,11 @@ export default function Home() {
       '4',
       '1'
     );
-    setProducts(topProducts.homePageProductDetails);
+    setProducts(topProducts.homePageProductDetails)
     }
-    initialData();
-  },[])
+    fetchData();
+  }, []);
+
   const loadMoreProducts = async () => {
     if (products?.length != 16) {
       const getBy: GetTopProductsBy | undefined = 'NewLaunched';
@@ -127,7 +130,7 @@ export default function Home() {
     url: 'https://www.bullionmentor.com/',
     logo: 'https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo.webp'
   };
-  // const itemListElement = products?.homePageProductDetails.map(
+  // const itemListElement = topProducts.homePageProductDetails.map(
   //   (product: any, index: number) => ({
   //     '@type': 'ListItem',
   //     position: index + 1,
@@ -145,7 +148,7 @@ export default function Home() {
         <title>{data.site.home.page}</title>
         {/*---------- Thumbnail code modified start*/}
         <meta name='twitter:url' content={`${process.env.WEBSITE_URL}`} />
-        <meta name='twitter:title' content={data.site.home.page} />
+        <meta name='twitter:title' content={data.site.home.description} />
         <meta name='twitter:description' content={data.site.home.description} />
         <meta name='twitter:card' content='summary' />
         <meta
@@ -309,8 +312,7 @@ export default function Home() {
       </Suspense>
     </>
   );
-        }
-// }
+}
 // export const getServerSideProps: GetServerSideProps<{
 //   title: any;
 //   description: any;
