@@ -2,12 +2,9 @@
 /* eslint-disable @next/next/inline-script-id */
 /* eslint-disable @next/next/no-script-in-head */
 import { Suspense, useEffect, useState } from 'react';
-import type {
-  GetServerSideProps,
-  InferGetServerSidePropsType
-} from 'next/types';
 import { getMaintainance, getTopProducts } from '@/services/spot-prices';
 import { GetTopProductsBy } from '@/interfaces/typeinterfaces';
+import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 import data from '@/data';
 import { GoFlame } from 'react-icons/go';
 import useToggle from '@/hooks/useToggle';
@@ -59,6 +56,7 @@ export default function Home() {
   const [products, setProducts] = useState<any[]>(
    
   );
+  const [abc, setAbc] = useState(false);
   useEffect(() => {
     const check = async () => {
       await getMaintainance();
@@ -84,6 +82,7 @@ export default function Home() {
   }, []);
   useEffect(() => {
     const fetchData = async ()=>{
+      setAbc(true)
     let topProducts;
     topProducts = await getTopProducts(
       undefined,
@@ -93,6 +92,7 @@ export default function Home() {
       '1'
     );
     setProducts(topProducts.homePageProductDetails)
+    setAbc(false);
     }
     fetchData();
   }, []);
@@ -271,8 +271,7 @@ export default function Home() {
                     </div>
                   </div>
                   {/******************* PRODUCTS ARRAY *******************/}
-
-                  <InfiniteScroll
+                  {abc===true?<GridViewSkeleton />: <InfiniteScroll
                     dataLength={products!==undefined?products.length:0}
                     next={loadMoreProducts}
                     hasMore={hasMore}
@@ -294,7 +293,8 @@ export default function Home() {
                         />
                       ))}
                     </div>
-                  </InfiniteScroll>
+                  </InfiniteScroll>}
+                 
                 </div>
               </div>
             </section>
